@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "page-design-guide": {
+      "command": "npx",
+      "args": ["-y", "page-design-guide-mcp"]
+    },
+    "playwright": {
+      "command": "cmd.exe",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@playwright/mcp@latest"
+      ]
+    }
+  }
+}

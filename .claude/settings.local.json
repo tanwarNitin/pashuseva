@@ -1,0 +1,6 @@
+{
+  "enabledMcpjsonServers": [
+    "page-design-guide",
+    "playwright"
+  ]
+}
