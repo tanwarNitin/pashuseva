@@ -1,0 +1,1 @@
+ALTER TABLE "vaccination_records" ADD COLUMN "reminder_dismissed" boolean DEFAULT false NOT NULL;

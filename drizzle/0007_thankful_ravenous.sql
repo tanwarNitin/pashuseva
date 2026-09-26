@@ -1,0 +1,2 @@
+ALTER TABLE "service_requests" DROP CONSTRAINT "service_requests_assigned_provider_check";--> statement-breakpoint
+ALTER TABLE "service_requests" ADD CONSTRAINT "service_requests_assigned_provider_check" CHECK ((status IN ('ACCEPTED', 'IN_PROGRESS', 'AWAITING_CONFIRMATION', 'DISPUTED', 'COMPLETED') AND accepted_provider_id IS NOT NULL) OR status NOT IN ('ACCEPTED', 'IN_PROGRESS', 'AWAITING_CONFIRMATION', 'DISPUTED', 'COMPLETED'));

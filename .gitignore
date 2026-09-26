@@ -39,3 +39,20 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+
+
+# AI agent working files (summaries, prompts, plans, scratch) - not for the repo
+BUILD_SUMMARY.md
+CLAUDE.md
+MASTER_EXECUTION_PROMPT___BUILD_condensed.md
+implementation_plan.md
+task.md
+fix.js
+write-test.cjs
+tsc-errors.txt
+test-cert.jpg
+*.code-workspace
+playwright-report/
+
+
