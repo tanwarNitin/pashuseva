@@ -15,7 +15,7 @@ export default function DesignSystemPage() {
       <div className="space-y-4">
         <h1 className="text-4xl font-bold tracking-tight">Design System Showcase</h1>
         <p className="text-lg text-muted-foreground">
-          Premium Utilitarian Minimalism — Farmer-First High Contrast UI
+          Premium Utilitarian Minimalism — Farmer-First High Contrast UI (Light Mode Only)
         </p>
       </div>
 
@@ -53,35 +53,35 @@ export default function DesignSystemPage() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="p-4 bg-background text-foreground rounded-lg border border-border">
             <div className="font-medium">Background</div>
-            <div className="text-xs opacity-80 mt-1 font-mono">#fbfbfa / #111111</div>
+            <div className="text-xs opacity-80 mt-1 font-mono">#fbfbfa</div>
           </div>
           <div className="p-4 bg-card text-card-foreground rounded-lg border border-border">
             <div className="font-medium">Card</div>
-            <div className="text-xs opacity-80 mt-1 font-mono">#ffffff / #1c1c1c</div>
+            <div className="text-xs opacity-80 mt-1 font-mono">#ffffff</div>
           </div>
           <div className="p-4 bg-primary text-primary-foreground rounded-lg border border-border">
             <div className="font-medium">Primary</div>
-            <div className="text-xs opacity-80 mt-1 font-mono">#16a34a / #22c55e</div>
+            <div className="text-xs opacity-80 mt-1 font-mono">#16a34a</div>
           </div>
           <div className="p-4 bg-secondary text-secondary-foreground rounded-lg border border-border">
             <div className="font-medium">Secondary</div>
-            <div className="text-xs opacity-80 mt-1 font-mono">#edf3ec / #243525</div>
+            <div className="text-xs opacity-80 mt-1 font-mono">#edf3ec</div>
           </div>
           <div className="p-4 bg-muted text-muted-foreground rounded-lg border border-border">
             <div className="font-medium">Muted</div>
-            <div className="text-xs opacity-80 mt-1 font-mono">#eaeaea / #2a2a2a</div>
+            <div className="text-xs opacity-80 mt-1 font-mono">#eaeaea</div>
           </div>
           <div className="p-4 bg-destructive text-destructive-foreground rounded-lg border border-border">
             <div className="font-medium">Destructive</div>
-            <div className="text-xs opacity-80 mt-1 font-mono">#dc2626 / #ef4444</div>
+            <div className="text-xs opacity-80 mt-1 font-mono">#dc2626</div>
           </div>
           <div className="p-4 bg-accent text-accent-foreground rounded-lg border border-border">
             <div className="font-medium">Accent</div>
-            <div className="text-xs opacity-80 mt-1 font-mono">#f7f6f3 / #2a2a2a</div>
+            <div className="text-xs opacity-80 mt-1 font-mono">#f7f6f3</div>
           </div>
           <div className="p-4 bg-border text-foreground rounded-lg border border-border">
             <div className="font-medium">Border</div>
-            <div className="text-xs opacity-80 mt-1 font-mono">#eaeaea / #333333</div>
+            <div className="text-xs opacity-80 mt-1 font-mono">#eaeaea</div>
           </div>
         </div>
       </section>
@@ -162,7 +162,7 @@ export default function DesignSystemPage() {
               <CardDescription>Scheduled checkup for 2 cattle</CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="text-sm">Provider will arrive on Monday, 10:00 AM.</p>
+              <p className="text-sm text-foreground">Provider will arrive on Monday, 10:00 AM.</p>
             </CardContent>
             <CardFooter className="flex justify-between">
               <Button variant="outline">Cancel</Button>
@@ -170,7 +170,7 @@ export default function DesignSystemPage() {
             </CardFooter>
           </Card>
           
-          <Card className="border-destructive/30 bg-destructive/5 dark:bg-destructive/10">
+          <Card className="border-destructive/30 bg-destructive/5">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <CardTitle className="text-destructive">Emergency SOS</CardTitle>
@@ -179,7 +179,7 @@ export default function DesignSystemPage() {
               <CardDescription>Requested 5 mins ago</CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="text-sm font-medium">Distance: 4.2 km</p>
+              <p className="text-sm font-medium text-foreground">Distance: 4.2 km</p>
               <p className="text-sm text-muted-foreground mt-1">Severe injury to leg, bleeding heavily.</p>
             </CardContent>
             <CardFooter className="flex justify-end gap-2">
@@ -204,21 +204,21 @@ export default function DesignSystemPage() {
           <Alert>
             <Info className="h-4 w-4" />
             <AlertTitle>Notice</AlertTitle>
-            <AlertDescription>
+            <AlertDescription className="text-foreground">
               Your duty lease will expire in 2 hours. Please renew to stay visible.
             </AlertDescription>
           </Alert>
           <Alert variant="destructive">
             <AlertCircle className="h-4 w-4" />
             <AlertTitle>Error</AlertTitle>
-            <AlertDescription>
+            <AlertDescription className="text-destructive-foreground">
               Failed to connect to the server. Please check your connection.
             </AlertDescription>
           </Alert>
-          <Alert className="border-primary/50 bg-primary/5 text-primary">
+          <Alert className="border-primary/50 bg-primary/5 text-secondary-foreground">
             <CheckCircle2 className="h-4 w-4 text-primary" />
             <AlertTitle>Success</AlertTitle>
-            <AlertDescription>
+            <AlertDescription className="text-secondary-foreground">
               Verification documents submitted successfully.
             </AlertDescription>
           </Alert>
