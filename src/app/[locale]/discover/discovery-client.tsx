@@ -344,7 +344,7 @@ export default function DiscoveryClient({
         <Card className="bg-card border-dashed">
           <CardContent className="flex flex-col items-center justify-center py-24">
             <Loader2 className="h-10 w-10 text-primary animate-spin mb-4" />
-            <h3 className="font-semibold text-lg text-foreground">{dict.discovery.gettingLocation || "Getting your location..."}</h3>
+            <h3 className="font-semibold text-lg text-foreground">{dict.discovery.gettingLocation}</h3>
           </CardContent>
         </Card>
       )}
@@ -353,9 +353,9 @@ export default function DiscoveryClient({
         <Card className="bg-card border-dashed">
           <CardContent className="flex flex-col items-center justify-center py-24 text-center">
             <MapPinOff className="h-14 w-14 text-muted-foreground mx-auto mb-5" />
-            <h2 className="font-semibold text-xl mb-2">{dict.discovery.enableLocation || "Location access needed"}</h2>
+            <h2 className="font-semibold text-xl mb-2">{dict.discovery.locationAccessNeeded}</h2>
             <p className="text-muted-foreground mb-8 max-w-md">
-              {dict.discovery.enableLocationDesc || "Please enable location to find nearby providers or use the search bar to find providers by name or area."}
+              {dict.discovery.enableLocationDescText}
             </p>
             <Button 
               size="lg" 
@@ -363,7 +363,7 @@ export default function DiscoveryClient({
               className="h-[44px] px-8 text-base font-medium min-w-[200px]"
             >
               <Crosshair className="h-4 w-4 mr-2" />
-              {dict.discovery.enableLocation || "Enable Location / Try Again"}
+              {dict.discovery.enableLocationRetry}
             </Button>
           </CardContent>
         </Card>
@@ -382,7 +382,7 @@ export default function DiscoveryClient({
                   </span>
                   {query && (
                     <span className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full">
-                      Matching "{query}"
+                      {dict.discovery.matchingQuery} "{query}"
                     </span>
                   )}
                 </div>
@@ -439,7 +439,7 @@ export default function DiscoveryClient({
                   <h3 className="font-semibold text-lg mb-1">{dict.discovery.noProvidersFound}</h3>
                   <p className="text-sm text-muted-foreground mb-6">
                     {query
-                      ? `No providers matched "${query}". Try clearing the search or widening your radius.`
+                      ? dict.discovery.noProvidersMatched
                       : dict.discovery.tryExpandingSearch}
                   </p>
                   {query && (
