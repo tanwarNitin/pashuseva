@@ -1,0 +1,48 @@
+- generic [active] [ref=f9e1]:
+  - generic [ref=f9e2]:
+    - banner [ref=f9e3]:
+      - generic [ref=f9e5]:
+        - link "PashuSeva" [ref=f9e6] [cursor=pointer]:
+          - /url: /en/discover
+          - generic [ref=f9e7]: 🐄
+        - navigation "Main navigation" [ref=f9e9]:
+          - link "Discover" [ref=f9e10] [cursor=pointer]:
+            - /url: /en/discover
+          - link "Requests" [ref=f9e16] [cursor=pointer]:
+            - /url: /en/requests
+          - link "My Cattle" [ref=f9e20] [cursor=pointer]:
+            - /url: /en/cattle
+        - generic [ref=f9e27]:
+          - button "Switch to हिंदी" [ref=f9e28]:
+            - generic [ref=f9e32]: हिंदी
+          - generic [ref=f9e34]:
+            - generic [ref=f9e35]:
+              - generic [ref=f9e36]: Rajesh Kumar
+              - generic [ref=f9e37]: "+919876543210"
+            - button "Logout" [ref=f9e38]
+    - main [ref=f9e44]:
+      - generic [ref=f9e45]:
+        - generic [ref=f9e46]:
+          - generic [ref=f9e47]:
+            - heading "Login" [level=1] [ref=f9e48]
+            - paragraph [ref=f9e49]: Enter your phone and PIN to access your account
+          - generic [ref=f9e50]:
+            - generic [ref=f9e51]:
+              - generic [ref=f9e52]: Phone Number
+              - textbox "Phone Number" [disabled]:
+                - /placeholder: +91 XXXXX XXXXX
+                - text: "+919876543200"
+            - generic [ref=f9e54]:
+              - generic [ref=f9e55]: 4-Digit PIN
+              - generic [ref=f9e56]:
+                - textbox "4-Digit PIN" [disabled]:
+                  - /placeholder: Enter 4-digit PIN
+                  - text: "1234"
+                - button "Show PIN" [disabled] [ref=f9e58]
+            - button "Logging in..." [disabled]
+        - paragraph [ref=f9e63]:
+          - text: Don't have an account?
+          - link "Register here" [ref=f9e64] [cursor=pointer]:
+            - /url: /en/register
+  - button "Open Next.js Dev Tools" [ref=f9e70] [cursor=pointer]
+  - alert [ref=f9e74]

@@ -1,0 +1,52 @@
+- generic [ref=f7e2]:
+  - banner [ref=f7e3]:
+    - generic [ref=f7e5]:
+      - link "PashuSeva" [ref=f7e6] [cursor=pointer]:
+        - /url: /en/discover
+        - generic [ref=f7e7]: 🐄
+      - navigation "Main navigation" [ref=f7e9]:
+        - link "Discover" [ref=f7e10] [cursor=pointer]:
+          - /url: /en/discover
+        - link "Requests" [ref=f7e16] [cursor=pointer]:
+          - /url: /en/requests
+        - link "My Cattle" [ref=f7e20] [cursor=pointer]:
+          - /url: /en/cattle
+      - generic [ref=f7e27]:
+        - button "Switch to हिंदी" [ref=f7e28]:
+          - generic [ref=f7e32]: हिंदी
+        - generic [ref=f7e34]:
+          - generic [ref=f7e35]:
+            - generic [ref=f7e36]: Rajesh Kumar
+            - generic [ref=f7e37]: "+919876543210"
+          - button "Logout" [ref=f7e38]
+  - main [ref=f7e45]:
+    - generic [ref=f7e46]:
+      - heading "Find Veterinary Help" [level=1] [ref=f7e47]
+      - paragraph [ref=f7e48]: Search for trusted veterinary providers near you
+    - generic [ref=f7e49]:
+      - generic [ref=f7e50]:
+        - generic [ref=f7e51]:
+          - generic [ref=f7e52]: Search by name or location
+          - textbox "Search by name or location" [ref=f7e57]
+        - generic [ref=f7e58]:
+          - button "Emergency (SOS)" [ref=f7e59] [cursor=pointer]
+          - button "Routine Visit" [ref=f7e60] [cursor=pointer]
+          - button "Refresh" [ref=f7e61] [cursor=pointer]
+      - generic [ref=f7e64]:
+        - generic [ref=f7e65]: 0 providers found
+        - generic [ref=f7e70]:
+          - generic [ref=f7e71]:
+            - generic [ref=f7e72]: "Search Radius:"
+            - combobox [ref=f7e73]:
+              - option "5 km"
+              - option "10 km"
+              - option "25 km"
+              - option "50 km" [selected]
+              - option "100 km"
+          - generic [ref=f7e74]:
+            - generic [ref=f7e75]: "Provider Type:"
+            - combobox [ref=f7e76]:
+              - option "All" [selected]
+              - option "Vet Doctors"
+              - option "Paravet Workers"
+      - button "Emergency (SOS)" [ref=f7e78] [cursor=pointer]

@@ -1,0 +1,55 @@
+- generic [active] [ref=f2e1]:
+  - generic [ref=f2e2]:
+    - banner [ref=f2e3]:
+      - generic [ref=f2e5]:
+        - link "PashuSeva" [ref=f2e6] [cursor=pointer]:
+          - /url: /en/discover
+          - generic [ref=f2e7]: 🐄
+        - navigation "Main navigation" [ref=f2e9]:
+          - link "Discover" [ref=f2e10] [cursor=pointer]:
+            - /url: /en/discover
+          - link "Requests" [ref=f2e16] [cursor=pointer]:
+            - /url: /en/requests
+          - link "My Cattle" [ref=f2e20] [cursor=pointer]:
+            - /url: /en/cattle
+        - generic [ref=f2e27]:
+          - button "Switch to हिंदी" [ref=f2e28]:
+            - generic [ref=f2e32]: हिंदी
+          - link "Login" [ref=f2e34] [cursor=pointer]:
+            - /url: /en/login
+    - main [ref=f2e41]:
+      - generic [ref=f2e42]:
+        - heading "Find Veterinary Help" [level=1] [ref=f2e43]
+        - paragraph [ref=f2e44]: Search for trusted veterinary providers near you
+      - generic [ref=f2e45]:
+        - generic [ref=f2e46]:
+          - generic [ref=f2e47]:
+            - generic [ref=f2e48]: Search by name or location
+            - textbox "Search by name or location" [ref=f2e53]
+          - generic [ref=f2e54]:
+            - button "Emergency (SOS)" [ref=f2e55] [cursor=pointer]
+            - button "Routine Visit" [ref=f2e56] [cursor=pointer]
+            - button "Refresh" [ref=f2e57] [cursor=pointer]
+        - generic [ref=f2e60]:
+          - generic [ref=f2e61]: 0 providers found
+          - generic [ref=f2e66]:
+            - generic [ref=f2e67]:
+              - generic [ref=f2e68]: "Search Radius:"
+              - combobox [ref=f2e69]:
+                - option "5 km"
+                - option "10 km"
+                - option "25 km"
+                - option "50 km" [selected]
+                - option "100 km"
+            - generic [ref=f2e70]:
+              - generic [ref=f2e71]: "Provider Type:"
+              - combobox [ref=f2e72]:
+                - option "All" [selected]
+                - option "Vet Doctors"
+                - option "Paravet Workers"
+        - generic [ref=f2e77]:
+          - heading "No providers found" [level=3] [ref=f2e81]
+          - paragraph [ref=f2e82]: Try expanding your search radius or changing the provider type
+        - button "Emergency (SOS)" [ref=f2e74] [cursor=pointer]
+  - button "Open Next.js Dev Tools" [ref=f2e88] [cursor=pointer]
+  - alert [ref=f2e92]

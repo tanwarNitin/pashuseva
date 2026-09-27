@@ -25,11 +25,13 @@ console.log("🔐 Generating secrets for PashuSeva...\n");
 // Generate cryptographically secure secrets
 const sessionSecret = randomBytes(32).toString("base64");
 const pinPepper = randomBytes(32).toString("base64");
+const cronSecret = randomBytes(32).toString("base64");
 
 const vapidKeys = webPush.generateVAPIDKeys();
 
 console.log("✅ Generated SESSION_SECRET (32 bytes)");
 console.log("✅ Generated PIN_PEPPER (32 bytes)");
+console.log("✅ Generated CRON_SECRET (32 bytes)");
 console.log("✅ Generated VAPID Keys for Web Push\n");
 
 // Create .env.local content
@@ -50,6 +52,7 @@ DB_SPATIAL_MODE=auto
 # Generated secrets (keep these safe)
 SESSION_SECRET=${sessionSecret}
 PIN_PEPPER=${pinPepper}
+CRON_SECRET=${cronSecret}
 
 SESSION_ISSUER=pashuseva
 SESSION_AUDIENCE=pashuseva-web

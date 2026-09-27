@@ -2,7 +2,7 @@
 "use server";
 
 import { discoverNearbyProviders } from "@/services/discovery.service";
-import { requireSession } from "@/lib/auth/session";
+import { getCurrentSession } from "@/lib/auth/session";
 import { success, error, type ActionResult } from "@/lib/result";
 import { z } from "zod";
 import { isAppError } from "@/lib/errors";
@@ -40,10 +40,10 @@ export async function discoverProvidersAction(
       providerType: formData.get("providerType") || undefined,
     });
 
-    // Verify the requesting user is an authenticated farmer
-    const session = await requireSession();
-    if (session.user.role !== "FARMER") {
-      return error("UNAUTHENTICATED", "errors.UNAUTHENTICATED");
+    // Allow public discovery (farmerId is optional on discover page)
+    const session = await getCurrentSession();
+    if (session && session.user.role !== "FARMER") {
+      // If logged in as non-farmer (e.g. provider or admin), still allow viewing
     }
 
     // Discover nearby providers

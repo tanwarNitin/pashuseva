@@ -1,0 +1,24 @@
+- generic [ref=f10e2]:
+  - banner [ref=f10e3]:
+    - generic [ref=f10e5]:
+      - link "PashuSeva" [ref=f10e6] [cursor=pointer]:
+        - /url: /en/discover
+        - generic [ref=f10e7]: 🐄
+      - navigation "Main navigation" [ref=f10e9]:
+        - link "Dashboard" [ref=f10e10] [cursor=pointer]:
+          - /url: /en/dashboard
+        - link "Discover" [ref=f10e14] [cursor=pointer]:
+          - /url: /en/discover
+      - generic [ref=f10e20]:
+        - button "Switch to हिंदी" [ref=f10e21]:
+          - generic [ref=f10e25]: हिंदी
+        - generic [ref=f10e27]:
+          - generic [ref=f10e28]:
+            - generic [ref=f10e29]: Dr. Amit Singh
+            - generic [ref=f10e30]: "+919876543200"
+          - button "Logout" [ref=f10e31]
+  - main [ref=f10e38]:
+    - generic [ref=f10e39]:
+      - heading "Provider Dashboard" [level=1] [ref=f10e40]
+      - paragraph [ref=f10e41]: Incoming Service Requests
+    - paragraph [ref=f10e45]: Loading...

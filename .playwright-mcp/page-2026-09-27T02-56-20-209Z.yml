@@ -1,0 +1,52 @@
+- generic [ref=f8e2]:
+  - banner [ref=f8e3]:
+    - generic [ref=f8e5]:
+      - link "पशुसेवा" [ref=f8e6] [cursor=pointer]:
+        - /url: /hi/discover
+        - generic [ref=f8e7]: 🐄
+      - navigation "Main navigation" [ref=f8e9]:
+        - link "खोजें" [ref=f8e10] [cursor=pointer]:
+          - /url: /hi/discover
+        - link "अनुरोध" [ref=f8e16] [cursor=pointer]:
+          - /url: /hi/requests
+        - link "मेरा पशु" [ref=f8e20] [cursor=pointer]:
+          - /url: /hi/cattle
+      - generic [ref=f8e27]:
+        - button "Switch to English" [ref=f8e28]:
+          - generic [ref=f8e32]: English
+        - generic [ref=f8e34]:
+          - generic [ref=f8e35]:
+            - generic [ref=f8e36]: Rajesh Kumar
+            - generic [ref=f8e37]: "+919876543210"
+          - button "लॉगआउट" [ref=f8e38]
+  - main [ref=f8e45]:
+    - generic [ref=f8e46]:
+      - heading "वेटेरनरी मदद खोजें" [level=1] [ref=f8e47]
+      - paragraph [ref=f8e48]: आपके पास भरोसेमंद वैटरिनरी प्रदाता खोजें
+    - generic [ref=f8e49]:
+      - generic [ref=f8e50]:
+        - generic [ref=f8e51]:
+          - generic [ref=f8e52]: नाम या स्थान द्वारा खोजें
+          - textbox "नाम या स्थान द्वारा खोजें" [ref=f8e57]
+        - generic [ref=f8e58]:
+          - button "आपातकालीन (SOS)" [ref=f8e59] [cursor=pointer]
+          - button "नियमित विजिट" [ref=f8e60] [cursor=pointer]
+          - button "रिफ्रेश करें" [ref=f8e61] [cursor=pointer]
+      - generic [ref=f8e64]:
+        - generic [ref=f8e65]: 0 प्रदाता मिले
+        - generic [ref=f8e70]:
+          - generic [ref=f8e71]:
+            - generic [ref=f8e72]: "खोज त्रिज्या:"
+            - combobox [ref=f8e73]:
+              - option "5 किमी"
+              - option "10 किमी"
+              - option "25 किमी"
+              - option "50 किमी" [selected]
+              - option "100 किमी"
+          - generic [ref=f8e74]:
+            - generic [ref=f8e75]: "प्रकार:"
+            - combobox [ref=f8e76]:
+              - option "सभी" [selected]
+              - option "वेत्ता चिकित्सक"
+              - option "पैरावेट कार्यकर्ता"
+      - button "आपातकालीन (SOS)" [ref=f8e78] [cursor=pointer]

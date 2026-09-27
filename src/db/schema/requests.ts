@@ -4,6 +4,7 @@ import {
   text,
   timestamp,
   integer,
+  boolean,
   index,
   unique,
   check,
@@ -71,6 +72,13 @@ export const serviceRequests = pgTable(
     updatedAt: timestamp("updated_at", { withTimezone: true })
       .notNull()
       .defaultNow(),
+    statusChangedAt: timestamp("status_changed_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+
+    // Watchdog fields
+    providerNudgedAt: timestamp("provider_nudged_at", { withTimezone: true }),
+    adminFlagged: boolean("admin_flagged").notNull().default(false),
   },
   (table) => ({
     farmerIdIdx: index("service_requests_farmer_id_idx").on(table.farmerId),

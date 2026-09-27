@@ -1,0 +1,49 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - generic [ref=e5]:
+      - link "PashuSeva" [ref=e6] [cursor=pointer]:
+        - /url: /en/discover
+        - generic [ref=e7]: 🐄
+      - navigation "Main navigation" [ref=e9]:
+        - link "Discover" [ref=e10] [cursor=pointer]:
+          - /url: /en/discover
+        - link "Requests" [ref=e16] [cursor=pointer]:
+          - /url: /en/requests
+        - link "My Cattle" [ref=e20] [cursor=pointer]:
+          - /url: /en/cattle
+      - generic [ref=e27]:
+        - button "Switch to हिंदी" [ref=e28]:
+          - generic [ref=e32]: हिंदी
+        - link "Login" [ref=e34] [cursor=pointer]:
+          - /url: /en/login
+  - main [ref=e41]:
+    - generic [ref=e42]:
+      - heading "Find Veterinary Help" [level=1] [ref=e43]
+      - paragraph [ref=e44]: Search for trusted veterinary providers near you
+    - generic [ref=e45]:
+      - generic [ref=e46]:
+        - generic [ref=e47]:
+          - generic [ref=e48]: Search by name or location
+          - textbox "Search by name or location" [ref=e53]
+        - generic [ref=e54]:
+          - button "Emergency (SOS)" [ref=e55] [cursor=pointer]
+          - button "Routine Visit" [ref=e56] [cursor=pointer]
+          - button "Refresh" [ref=e57] [cursor=pointer]
+      - generic [ref=e60]:
+        - generic [ref=e61]: 0 providers found
+        - generic [ref=e66]:
+          - generic [ref=e67]:
+            - generic [ref=e68]: "Search Radius:"
+            - combobox [ref=e69]:
+              - option "5 km"
+              - option "10 km"
+              - option "25 km"
+              - option "50 km" [selected]
+              - option "100 km"
+          - generic [ref=e70]:
+            - generic [ref=e71]: "Provider Type:"
+            - combobox [ref=e72]:
+              - option "All" [selected]
+              - option "Vet Doctors"
+              - option "Paravet Workers"
+      - button "Emergency (SOS)" [ref=e74] [cursor=pointer]

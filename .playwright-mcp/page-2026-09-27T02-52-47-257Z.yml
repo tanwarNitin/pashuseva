@@ -1,0 +1,40 @@
+- generic [ref=f5e2]:
+  - banner [ref=f5e3]:
+    - generic [ref=f5e5]:
+      - link "PashuSeva" [ref=f5e6] [cursor=pointer]:
+        - /url: /en/discover
+        - generic [ref=f5e7]: 🐄
+      - navigation "Main navigation" [ref=f5e9]:
+        - link "Discover" [ref=f5e10] [cursor=pointer]:
+          - /url: /en/discover
+        - link "Requests" [ref=f5e16] [cursor=pointer]:
+          - /url: /en/requests
+        - link "My Cattle" [ref=f5e20] [cursor=pointer]:
+          - /url: /en/cattle
+      - generic [ref=f5e27]:
+        - button "Switch to हिंदी" [ref=f5e28]:
+          - generic [ref=f5e32]: हिंदी
+        - link "Login" [ref=f5e34] [cursor=pointer]:
+          - /url: /en/login
+  - main [ref=f5e40]:
+    - generic [ref=f5e41]:
+      - generic [ref=f5e42]:
+        - generic [ref=f5e43]:
+          - heading "Login" [level=1] [ref=f5e44]
+          - paragraph [ref=f5e45]: Enter your phone and PIN to access your account
+        - generic [ref=f5e46]:
+          - generic [ref=f5e47]:
+            - generic [ref=f5e48]: Phone Number
+            - textbox "Phone Number" [ref=f5e49]:
+              - /placeholder: +91 XXXXX XXXXX
+          - generic [ref=f5e50]:
+            - generic [ref=f5e51]: 4-Digit PIN
+            - generic [ref=f5e52]:
+              - textbox "4-Digit PIN" [ref=f5e53]:
+                - /placeholder: Enter 4-digit PIN
+              - button "Show PIN" [ref=f5e54]
+          - button "Login" [ref=f5e58] [cursor=pointer]
+      - paragraph [ref=f5e59]:
+        - text: Don't have an account?
+        - link "Register here" [ref=f5e60] [cursor=pointer]:
+          - /url: /en/register

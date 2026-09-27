@@ -1,0 +1,85 @@
+- generic [active] [ref=f10e1]:
+  - generic [ref=f10e2]:
+    - banner [ref=f10e3]:
+      - generic [ref=f10e5]:
+        - link "PashuSeva" [ref=f10e6] [cursor=pointer]:
+          - /url: /en/discover
+          - generic [ref=f10e7]: 🐄
+        - navigation "Main navigation" [ref=f10e9]:
+          - link "Dashboard" [ref=f10e10] [cursor=pointer]:
+            - /url: /en/dashboard
+          - link "Discover" [ref=f10e14] [cursor=pointer]:
+            - /url: /en/discover
+        - generic [ref=f10e20]:
+          - button "Switch to हिंदी" [ref=f10e21]:
+            - generic [ref=f10e25]: हिंदी
+          - generic [ref=f10e27]:
+            - generic [ref=f10e28]:
+              - generic [ref=f10e29]: Dr. Amit Singh
+              - generic [ref=f10e30]: "+919876543200"
+            - button "Logout" [ref=f10e31]
+    - main [ref=f10e38]:
+      - generic [ref=f10e39]:
+        - heading "Provider Dashboard" [level=1] [ref=f10e40]
+        - paragraph [ref=f10e41]: Incoming Service Requests
+      - generic [ref=f10e42]:
+        - button "Enable Notifications" [ref=f10e47] [cursor=pointer]
+        - generic [ref=f10e48]:
+          - generic [ref=f10e49]:
+            - generic [ref=f10e50]:
+              - generic [ref=f10e52]:
+                - generic [ref=f10e53]: Dr. Amit Singh
+                - generic [ref=f10e54]: BVSc & AH, MVSc (Surgery) • Veterinary Doctor
+              - generic [ref=f10e55]: Registration Verified • Uttar Pradesh Veterinary Council
+            - generic [ref=f10e59]:
+              - generic [ref=f10e60]:
+                - generic [ref=f10e61]: Registration / License Number
+                - generic [ref=f10e62]: VET/UP/2020/001
+              - generic [ref=f10e63]:
+                - generic [ref=f10e64]: Base Visit Fee (₹)
+                - generic [ref=f10e65]: ₹150
+              - generic [ref=f10e66]:
+                - generic [ref=f10e67]: Per Km Travel Fee (₹)
+                - generic [ref=f10e68]: ₹8/km
+          - generic [ref=f10e69]:
+            - generic [ref=f10e71]:
+              - generic [ref=f10e72]:
+                - generic [ref=f10e73]: Duty Status
+                - generic [ref=f10e74]: You are on duty and eligible to receive emergency SOS and routine visits.
+              - generic [ref=f10e75]:
+                - generic [ref=f10e76]: On Duty
+                - switch "Toggle Duty Status" [checked] [ref=f10e77]
+                - checkbox [checked] [aria-hidden] [ref=f10e78]
+            - generic [ref=f10e80]:
+              - generic [ref=f10e81]:
+                - generic [ref=f10e82]:
+                  - generic [ref=f10e83]: Active 8-Hour Duty Lease
+                  - button "Renew Duty (8h)" [ref=f10e87] [cursor=pointer]
+                - paragraph [ref=f10e88]: Expires in —
+              - generic [ref=f10e89]:
+                - generic [ref=f10e90]:
+                  - generic [ref=f10e91]: Location confirmed
+                  - button "Update Location" [ref=f10e95] [cursor=pointer]
+                - paragraph [ref=f10e96]: Coordinates unconfirmed
+        - generic [ref=f10e97]:
+          - generic [ref=f10e98]: Requests update automatically while this dashboard is open.
+          - generic [ref=f10e103]:
+            - generic [ref=f10e104]: Updated just now
+            - button "Refresh live feed" [ref=f10e105]
+        - generic [ref=f10e109]:
+          - heading "Active Assigned Requests 0" [level=2] [ref=f10e110]:
+            - generic [ref=f10e111]: Active Assigned Requests
+            - generic [ref=f10e112]: "0"
+          - paragraph [ref=f10e115]: No active assignments right now.
+        - generic [ref=f10e116]:
+          - heading "Live Emergency & Routine Feed 0" [level=2] [ref=f10e117]:
+            - generic [ref=f10e118]: Live Emergency & Routine Feed
+            - generic [ref=f10e119]: "0"
+          - paragraph [ref=f10e122]: No incoming requests right now. They will appear here live when created.
+        - generic [ref=f10e123]:
+          - heading "Upcoming Visits 0" [level=2] [ref=f10e124]:
+            - generic [ref=f10e125]: Upcoming Visits
+            - generic [ref=f10e126]: "0"
+          - paragraph [ref=f10e129]: No upcoming routine visits
+  - button "Open Next.js Dev Tools" [ref=f10e135] [cursor=pointer]
+  - alert [ref=f10e139]

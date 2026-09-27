@@ -18,6 +18,7 @@ const envSchema = z.object({
   // Secrets
   SESSION_SECRET: z.string().min(32),
   PIN_PEPPER: z.string().min(32),
+  CRON_SECRET: z.string().min(16),
 
   // JWT
   SESSION_ISSUER: z.string().default("pashuseva"),

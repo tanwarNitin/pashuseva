@@ -144,3 +144,35 @@ The platform provides a health check endpoint for container orchestrators and lo
 ### 6.5 Hosting Realities & Zero-Cost Boundaries
 - **Zero-Paid-API Architecture**: PashuSeva incurs zero recurring fees for third-party mapping, SMS, or telephony APIs.
 - **Infrastructure Reality**: Running the web server and PostgreSQL database requires persistent computing hardware or a virtual private server (e.g. $5/mo VPS or existing institutional server). No claim is made of permanent zero-cost public hosting without hosting infrastructure.
+
+---
+
+## 7. Cron Scheduling
+
+PashuSeva uses a background watchdog to ensure stale service requests are updated and monitored.
+
+### 7.1 Watchdog Configuration
+Set `CRON_SECRET` in `.env.local`:
+```dotenv
+CRON_SECRET="your-secure-random-string"
+```
+
+### 7.2 Calling the Endpoint
+You must trigger `GET /api/cron/check-stale-visits` every 15 minutes with the secret in the Authorization header:
+```
+Authorization: Bearer your-secure-random-string
+```
+
+#### Option A: cron-job.org (Free Cloud Cron)
+1. Create a free account at [cron-job.org](https://cron-job.org).
+2. Create a new cron job.
+3. **URL**: `https://your-domain.com/api/cron/check-stale-visits`
+4. **Execution schedule**: Every 15 minutes.
+5. **Advanced > Headers**: Add a header with Key `Authorization` and Value `Bearer your-secure-random-string`.
+6. Save and enable the job.
+
+#### Option B: VM / Linux Cron
+If hosting on a Linux VM, add a rule to the system crontab (`crontab -e`):
+```bash
+*/15 * * * * curl -s -H "Authorization: Bearer your-secure-random-string" https://your-domain.com/api/cron/check-stale-visits >/dev/null 2>&1
+```

@@ -520,6 +520,7 @@ export async function acceptServiceRequest(
         acceptedProviderId: providerId,
         acceptedAt: new Date(),
         updatedAt: new Date(),
+        statusChangedAt: new Date(),
       })
       .where(
         and(
@@ -636,6 +637,7 @@ export async function startServiceRequest(
       status: "IN_PROGRESS",
       startedAt: new Date(),
       updatedAt: new Date(),
+      statusChangedAt: new Date(),
     })
     .where(
       and(
@@ -679,6 +681,7 @@ export async function markServiceRequestDone(
     .set({
       status: "AWAITING_CONFIRMATION",
       updatedAt: new Date(),
+      statusChangedAt: new Date(),
     })
     .where(
       and(
@@ -730,6 +733,7 @@ export async function confirmServiceRequest(
       status: "COMPLETED",
       completedAt: new Date(),
       updatedAt: new Date(),
+      statusChangedAt: new Date(),
     })
     .where(
       and(
@@ -772,6 +776,7 @@ export async function disputeServiceRequest(
     .set({
       status: "DISPUTED",
       updatedAt: new Date(),
+      statusChangedAt: new Date(),
     })
     .where(
       and(
@@ -830,6 +835,7 @@ export async function resolveDisputeServiceRequest(
       status: resolution,
       ...(resolution === "COMPLETED" ? { completedAt: new Date() } : { cancelledAt: new Date(), cancellationReason: "Admin Resolution: " + notes }),
       updatedAt: new Date(),
+      statusChangedAt: new Date(),
     })
     .where(
       and(
@@ -900,6 +906,7 @@ export async function cancelServiceRequest(
       cancelledAt: new Date(),
       cancellationReason: reason,
       updatedAt: new Date(),
+      statusChangedAt: new Date(),
     })
     .where(eq(serviceRequests.id, requestId));
 
@@ -941,7 +948,8 @@ export async function expireServiceRequests(): Promise<number> {
     .update(serviceRequests)
     .set({
       status: "EXPIRED",
-      updatedAt: new Date()
+      updatedAt: new Date(),
+      statusChangedAt: new Date(),
     })
     .where(
       and(
