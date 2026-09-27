@@ -2,6 +2,7 @@ import { getProvidersAction } from "@/actions/admin.actions";
 import { VerifyClient } from "./verify-client";
 import { requireAdmin } from "@/lib/auth/session";
 import { redirect } from "next/navigation";
+import { PageShell } from "@/components/layout/page-shell";
 
 export default async function AdminVerifyPage({
   params,
@@ -24,9 +25,8 @@ export default async function AdminVerifyPage({
   const providers = await getProvidersAction(statusFilter !== "ALL" ? statusFilter : undefined);
   
   return (
-    <div className="container mx-auto py-8">
-      <h1 className="text-3xl font-bold mb-8">Provider Verification Admin</h1>
+    <PageShell title="Provider Verification Admin">
       <VerifyClient initialProviders={providers} currentStatus={statusFilter} locale={p.locale} />
-    </div>
+    </PageShell>
   );
 }

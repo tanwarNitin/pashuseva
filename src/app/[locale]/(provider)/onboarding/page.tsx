@@ -7,6 +7,7 @@ import { redirect } from "next/navigation";
 import { db } from "@/db";
 import { providerProfiles } from "@/db/schema";
 import { eq } from "drizzle-orm";
+import { PageShell } from "@/components/layout/page-shell";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -48,16 +49,14 @@ export default async function OnboardingPage({ params }: PageProps) {
   }
 
   return (
-    <main className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto">
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 sm:p-8">
-          <div className="mb-8">
-            <h1 className="text-2xl font-bold text-gray-900">{dict.provider.onboarding.title}</h1>
-            <p className="mt-2 text-gray-600">{dict.provider.onboarding.subtitle}</p>
-          </div>
-          <OnboardingForm locale={locale} dict={dict.provider.onboarding} />
-        </div>
+    <PageShell
+      title={dict.provider.onboarding.title}
+      subtitle={dict.provider.onboarding.subtitle}
+      className="max-w-3xl"
+    >
+      <div className="bg-card rounded-xl shadow-sm border border-border p-6 sm:p-8">
+        <OnboardingForm locale={locale} dict={dict.provider.onboarding} />
       </div>
-    </main>
+    </PageShell>
   );
 }

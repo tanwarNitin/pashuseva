@@ -8,6 +8,7 @@ import { animals, healthCardConsents, serviceRequests } from "@/db/schema";
 import { eq, and, isNull, inArray } from "drizzle-orm";
 import { getCurrentSession } from "@/lib/auth/session";
 import { AlertTriangle } from "lucide-react";
+import { PageShell } from "@/components/layout/page-shell";
 
 interface PageProps {
   params: Promise<{ locale: string; id: string }>;
@@ -92,29 +93,25 @@ export default async function CattleHealthCardPage({ params }: PageProps) {
     // Provider without access gets the access required message
     // (Note: we don't set a 403 HTTP status natively here without throwing, but we render a clear UI)
     return (
-      <div className="bg-gray-50 flex flex-col">
-        <main className="flex-1 flex items-center justify-center p-4">
-          <div className="max-w-md w-full bg-white shadow rounded-lg p-8 text-center space-y-4">
-            <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto text-red-600">
-              <AlertTriangle className="w-8 h-8" />
-            </div>
-            <h1 className="text-2xl font-bold text-gray-900">
-              {dict.cattle.accessRequired || "Access Required"}
-            </h1>
-            <p className="text-gray-600">
-              {dict.cattle.accessRequiredDesc || "You do not have permission to view this health card. Please ask the farmer to grant you access."}
-            </p>
+      <main className="min-h-screen flex items-center justify-center p-4 bg-background">
+        <div className="max-w-md w-full bg-card shadow-sm border border-border rounded-lg p-8 text-center space-y-4">
+          <div className="w-16 h-16 bg-destructive/10 rounded-full flex items-center justify-center mx-auto text-destructive">
+            <AlertTriangle className="w-8 h-8" />
           </div>
-        </main>
-      </div>
+          <h1 className="text-2xl font-bold text-foreground">
+            {dict.cattle.accessRequired || "Access Required"}
+          </h1>
+          <p className="text-muted-foreground">
+            {dict.cattle.accessRequiredDesc || "You do not have permission to view this health card. Please ask the farmer to grant you access."}
+          </p>
+        </div>
+      </main>
     );
   }
 
   return (
-    <div className="bg-gray-50">
-      <main className="max-w-4xl mx-auto px-4 py-8">
-        <CattleHealthCardClient animal={animal} isProvider={session.user.role !== "FARMER"} />
-      </main>
-    </div>
+    <PageShell>
+      <CattleHealthCardClient animal={animal} isProvider={session.user.role !== "FARMER"} />
+    </PageShell>
   );
 }

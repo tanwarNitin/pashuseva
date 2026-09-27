@@ -64,15 +64,15 @@ export function VaccinationReminders({ reminders, locale, dict }: VaccinationRem
               </div>
               <div>
                 <div className="flex flex-wrap items-center gap-2 mb-1">
-                  <span className="font-semibold text-gray-900">
+                  <span className="font-semibold text-foreground">
                     {reminder.animalName || dict.cattle.unnamed} {reminder.tagId ? `(${reminder.tagId})` : ""}
                   </span>
                   <Badge variant={reminder.isOverdue ? "destructive" : "secondary"} className={!reminder.isOverdue ? "bg-orange-100 text-orange-800 hover:bg-orange-100" : ""}>
                     {reminder.isOverdue ? dict.cattle.overdue : dict.cattle.dueSoon}
                   </Badge>
                 </div>
-                <p className="text-sm text-gray-600">
-                  <span className="font-medium text-gray-900">{reminder.vaccineName}</span> • {dict.cattle.vaccineDueOn}: {new Date(reminder.nextDueOn).toLocaleDateString(locale)}
+                <p className="text-sm text-muted-foreground">
+                  <span className="font-medium text-foreground">{reminder.vaccineName}</span> • {dict.cattle.vaccineDueOn}: {new Date(reminder.nextDueOn).toLocaleDateString(locale)}
                 </p>
               </div>
             </div>
@@ -83,7 +83,7 @@ export function VaccinationReminders({ reminders, locale, dict }: VaccinationRem
                 size="sm" 
                 onClick={() => handleDismiss(reminder.id)}
                 disabled={isPending}
-                className="text-gray-500 hover:text-gray-700"
+                className="text-muted-foreground hover:text-foreground"
                 title={dict.cattle.dismiss}
               >
                 <X className="h-4 w-4 sm:mr-1" />

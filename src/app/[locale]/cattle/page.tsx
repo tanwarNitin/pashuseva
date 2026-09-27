@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Users, Calendar, Activity, Edit, ChevronRight, Plus } from "lucide-react";
 import Link from "next/link";
+import { PageShell } from "@/components/layout/page-shell";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -119,22 +120,19 @@ export default async function CattleListPage({ params }: PageProps) {
   };
 
   return (
-    <div className="bg-gray-50">
-      <main className="max-w-screen-xl mx-auto px-4 py-8">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">{dict.nav.cattle}</h1>
-            <p className="text-gray-600 mt-1">{dict.cattle.subtitle || "Manage your livestock health records"}</p>
-          </div>
-          <Link href={`/${locale}/cattle/add`}>
-            <Button>
-              <Plus className="w-4 h-4 mr-2" />
-              {dict.cattle.addAnimal}
-            </Button>
-          </Link>
-        </div>
-
-        <VaccinationReminders reminders={activeReminders} locale={locale} dict={dict} />
+    <PageShell
+      title={dict.nav.cattle}
+      subtitle={dict.cattle.subtitle || "Manage your livestock health records"}
+      primaryAction={
+        <Link href={`/${locale}/cattle/add`}>
+          <Button>
+            <Plus className="w-4 h-4 mr-2" />
+            {dict.cattle.addAnimal}
+          </Button>
+        </Link>
+      }
+    >
+      <VaccinationReminders reminders={activeReminders} locale={locale} dict={dict} />
 
         {farmerAnimals.length === 0 ? (
           <Card>
@@ -166,7 +164,7 @@ export default async function CattleListPage({ params }: PageProps) {
                   </div>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 text-sm text-gray-600">
+                  <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 text-sm text-muted-foreground">
                     <div className="flex items-center gap-2">
                       <Activity className="w-4 h-4" />
                       <span>{animal.breed || dict.cattle.unknown}</span>
@@ -179,8 +177,8 @@ export default async function CattleListPage({ params }: PageProps) {
                     )}
                   </div>
 
-                  <div className="pt-4 border-t border-gray-100 flex items-center justify-between">
-                    <div className="text-sm text-gray-600">
+                  <div className="pt-4 border-t border-border flex items-center justify-between">
+                    <div className="text-sm text-muted-foreground">
                       {animal.notes ? animal.notes.substring(0, 50) + "..." : dict.cattle.noNotes}
                     </div>
                     <Link href={`/${locale}/cattle/${animal.id}`}>
@@ -195,7 +193,6 @@ export default async function CattleListPage({ params }: PageProps) {
             ))}
           </div>
         )}
-      </main>
-    </div>
+    </PageShell>
   );
 }

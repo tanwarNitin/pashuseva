@@ -142,18 +142,18 @@ export default function RequestTrackingClient({ requestId }: RequestTrackingClie
   if (loading && !request) {
     return (
       <div className="flex flex-col items-center justify-center py-20">
-        <Loader2 className="h-12 w-12 text-red-600 animate-spin mb-4" />
-        <p className="text-gray-500">Loading request details...</p>
+        <Loader2 className="h-12 w-12 text-primary animate-spin mb-4" />
+        <p className="text-muted-foreground">Loading request details...</p>
       </div>
     );
   }
 
   if (error || !request) {
     return (
-      <Card className="border-red-200 bg-red-50">
+      <Card className="border-destructive bg-destructive/5">
         <CardContent className="p-6 text-center">
-          <AlertTriangle className="h-12 w-12 text-red-500 mx-auto mb-4" />
-          <p className="text-red-700 font-medium mb-4">{error || "Request not found"}</p>
+          <AlertTriangle className="h-12 w-12 text-destructive mx-auto mb-4" />
+          <p className="text-destructive font-medium mb-4">{error || "Request not found"}</p>
           <Button onClick={() => router.push("/en/discover")}>Return to Discovery</Button>
         </CardContent>
       </Card>
@@ -170,12 +170,12 @@ export default function RequestTrackingClient({ requestId }: RequestTrackingClie
         </Button>
       </div>
 
-      <Card className={`border-t-4 ${request.kind === "SOS" ? "border-red-500" : "border-blue-500"}`}>
+      <Card className={`border-t-4 ${request.kind === "SOS" ? "border-destructive" : "border-primary"}`}>
         <CardHeader>
           <div className="flex justify-between items-start">
             <div>
               <CardTitle className="flex items-center gap-2">
-                {request.kind === "SOS" && <AlertTriangle className="h-5 w-5 text-red-500" />}
+                {request.kind === "SOS" && <AlertTriangle className="h-5 w-5 text-destructive" />}
                 {request.kind === "SOS" ? "Emergency Request" : "Routine Request"}
               </CardTitle>
               <CardDescription className="mt-1">
@@ -199,19 +199,19 @@ export default function RequestTrackingClient({ requestId }: RequestTrackingClie
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="space-y-2">
-            <h3 className="text-sm font-medium text-gray-500">Condition</h3>
-            <p className="text-gray-900">{request.conditionSummary}</p>
+            <h3 className="text-sm font-medium text-muted-foreground">Condition</h3>
+            <p className="text-foreground">{request.conditionSummary}</p>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1">
-              <h3 className="text-sm font-medium text-gray-500">Service Needed</h3>
-              <p className="text-gray-900">{request.serviceCode}</p>
+              <h3 className="text-sm font-medium text-muted-foreground">Service Needed</h3>
+              <p className="text-foreground">{request.serviceCode}</p>
             </div>
             {request.animalName && (
               <div className="space-y-1">
-                <h3 className="text-sm font-medium text-gray-500">Animal</h3>
-                <p className="text-gray-900">{request.animalName} {request.animalTagId ? `(${request.animalTagId})` : ""}</p>
+                <h3 className="text-sm font-medium text-muted-foreground">Animal</h3>
+                <p className="text-foreground">{request.animalName} {request.animalTagId ? `(${request.animalTagId})` : ""}</p>
               </div>
             )}
           </div>

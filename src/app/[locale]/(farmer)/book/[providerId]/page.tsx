@@ -6,6 +6,7 @@ import { eq } from "drizzle-orm";
 import BookRoutineClient from "./book-routine-client";
 import { getDictionary } from "@/i18n/server";
 import type { Locale } from "@/i18n/config";
+import { PageShell } from "@/components/layout/page-shell";
 
 interface PageProps {
   params: Promise<{
@@ -55,7 +56,7 @@ export default async function BookRoutinePage({ params }: PageProps) {
     .where(eq(animals.farmerId, session.user.id));
 
   return (
-    <div className="container max-w-2xl py-8">
+    <PageShell className="max-w-2xl">
       <BookRoutineClient 
         provider={{
           ...provider,
@@ -64,6 +65,6 @@ export default async function BookRoutinePage({ params }: PageProps) {
         animals={farmerAnimals} 
         locale={resolvedParams.locale} 
       />
-    </div>
+    </PageShell>
   );
 }

@@ -12,6 +12,7 @@ import Link from "next/link";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getFarmerRoutineBookings } from "@/actions/routine.actions";
 import RoutineClient from "./routine-client";
+import { PageShell } from "@/components/layout/page-shell";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -61,22 +62,19 @@ export default async function RequestsPage({ params }: PageProps) {
   const routineBookings = await getFarmerRoutineBookings();
 
   return (
-    <div className="bg-gray-50">
-      <main className="max-w-screen-xl mx-auto px-4 py-8">
-        <div className="mb-8 flex justify-between items-center">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">{dict.nav.requests}</h1>
-            <p className="text-gray-600 mt-1">{dict.requests.subtitle}</p>
-          </div>
-          <div className="flex items-center gap-4">
-            <PushToggle />
-            <Link href={`/${locale}/discover`}>
-              <Button>{dict.requests.createRequest}</Button>
-            </Link>
-          </div>
+    <PageShell
+      title={dict.nav.requests}
+      subtitle={dict.requests.subtitle}
+      primaryAction={
+        <div className="flex items-center gap-4">
+          <PushToggle />
+          <Link href={`/${locale}/discover`}>
+            <Button>{dict.requests.createRequest}</Button>
+          </Link>
         </div>
-
-        <Tabs defaultValue="routine" className="space-y-6">
+      }
+    >
+      <Tabs defaultValue="routine" className="space-y-6">
           <TabsList className="grid w-full grid-cols-2 max-w-[400px]">
             <TabsTrigger value="routine">{dict.discovery.routine}</TabsTrigger>
             <TabsTrigger value="sos">{dict.discovery.emergency}</TabsTrigger>
@@ -115,22 +113,22 @@ export default async function RequestsPage({ params }: PageProps) {
                     </CardHeader>
                     <CardContent className="space-y-4">
                       <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
-                        <div className="flex items-center gap-2 text-sm text-gray-600">
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
                           <Stethoscope className="w-4 h-4" />
                           <span>{request.kind === "SOS" ? dict.requests.emergency : dict.requests.routine}</span>
                         </div>
-                        <div className="flex items-center gap-2 text-sm text-gray-600">
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
                           <Clock className="w-4 h-4" />
                           <span>{new Date(request.createdAt).toLocaleDateString(locale)}</span>
                         </div>
-                        <div className="flex items-center gap-2 text-sm text-gray-600">
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
                           <MapPin className="w-4 h-4" />
                           <span>{request.locationDescription || request.locationSource}</span>
                         </div>
                       </div>
 
-                      <div className="pt-4 border-t border-gray-100 flex items-center justify-between">
-                        <div className="text-sm text-gray-600">
+                      <div className="pt-4 border-t border-border flex items-center justify-between">
+                        <div className="text-sm text-muted-foreground">
                           Service: {request.serviceCode}
                         </div>
                         <Link href={`/${locale}/cattle/${request.animalId}`}>
@@ -147,7 +145,6 @@ export default async function RequestsPage({ params }: PageProps) {
             )}
           </TabsContent>
         </Tabs>
-      </main>
-    </div>
+    </PageShell>
   );
 }

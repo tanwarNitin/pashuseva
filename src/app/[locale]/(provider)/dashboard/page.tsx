@@ -4,6 +4,7 @@ import { getLocaleOrDefault } from "@/i18n/config";
 import { getCurrentSession } from "@/lib/auth/session";
 import { redirect } from "next/navigation";
 import ProviderDashboardClient from "./dashboard-client";
+import { PageShell } from "@/components/layout/page-shell";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -33,14 +34,11 @@ export default async function ProviderDashboardPage({ params }: PageProps) {
   }
 
   return (
-    <div className="bg-gray-50">
-      <main className="max-w-screen-xl mx-auto px-4 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">{dict.provider.dashboard}</h1>
-          <p className="text-gray-600 mt-1">{dict.provider.incomingRequests}</p>
-        </div>
-        <ProviderDashboardClient dict={dict} locale={locale} />
-      </main>
-    </div>
+    <PageShell
+      title={dict.provider.dashboard}
+      subtitle={dict.provider.incomingRequests}
+    >
+      <ProviderDashboardClient dict={dict} locale={locale} />
+    </PageShell>
   );
 }

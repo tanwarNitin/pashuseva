@@ -4,6 +4,7 @@ import { getLocaleOrDefault } from "@/i18n/config";
 import { getCurrentSession } from "@/lib/auth/session";
 import { redirect } from "next/navigation";
 import RequestTrackingClient from "@/components/farmer/request-tracking-client";
+import { PageShell } from "@/components/layout/page-shell";
 
 interface PageProps {
   params: Promise<{ locale: string; requestId: string }>;
@@ -29,10 +30,8 @@ export default async function RequestTrackingPage({ params }: PageProps) {
   }
 
   return (
-    <div className="bg-gray-50">
-      <main className="max-w-screen-md mx-auto px-4 py-8">
-        <RequestTrackingClient requestId={requestId} />
-      </main>
-    </div>
+    <PageShell>
+      <RequestTrackingClient requestId={requestId} />
+    </PageShell>
   );
 }

@@ -92,7 +92,7 @@ export function VerifyClient({ initialProviders, currentStatus, locale }: { init
         </TabsList>
       </Tabs>
 
-      <div className="rounded-md border bg-white overflow-x-auto">
+      <div className="rounded-md border bg-card overflow-x-auto">
         <Table>
           <TableHeader>
             <TableRow>
@@ -109,7 +109,7 @@ export function VerifyClient({ initialProviders, currentStatus, locale }: { init
           <TableBody>
             {initialProviders.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={8} className="text-center py-8 text-gray-500">
+                <TableCell colSpan={8} className="text-center py-8 text-muted-foreground">
                   No providers found for this status.
                 </TableCell>
               </TableRow>
@@ -126,10 +126,10 @@ export function VerifyClient({ initialProviders, currentStatus, locale }: { init
                     {p.registrationNumber ? (
                       <div>
                         <div className="font-medium">{p.registrationNumber}</div>
-                        <div className="text-xs text-gray-500">{p.registrationAuthority}</div>
+                        <div className="text-xs text-muted-foreground">{p.registrationAuthority}</div>
                       </div>
                     ) : (
-                      <span className="text-gray-400">Not provided</span>
+                      <span className="text-muted-foreground opacity-70">Not provided</span>
                     )}
                   </TableCell>
                   <TableCell>
@@ -138,15 +138,15 @@ export function VerifyClient({ initialProviders, currentStatus, locale }: { init
                         href={`/api/provider/documents?path=${encodeURIComponent(p.registrationDocumentPath)}`} 
                         target="_blank" 
                         rel="noreferrer"
-                        className="text-blue-600 hover:underline text-sm"
+                        className="text-primary hover:underline text-sm"
                       >
                         View Doc
                       </a>
                     ) : (
-                      <span className="text-gray-400 text-sm">None</span>
+                      <span className="text-muted-foreground opacity-70 text-sm">None</span>
                     )}
                   </TableCell>
-                  <TableCell className="text-sm text-gray-500">
+                  <TableCell className="text-sm text-muted-foreground">
                     {new Date(p.createdAt).toLocaleDateString()}
                   </TableCell>
                   <TableCell className="text-right space-x-2 whitespace-nowrap">
@@ -155,7 +155,6 @@ export function VerifyClient({ initialProviders, currentStatus, locale }: { init
                         <Button 
                           size="sm" 
                           variant="default"
-                          className="bg-green-600 hover:bg-green-700"
                           onClick={() => { setSelectedProvider(p); setActionType("APPROVE"); }}
                         >
                           Approve
@@ -182,7 +181,6 @@ export function VerifyClient({ initialProviders, currentStatus, locale }: { init
                       <Button 
                         size="sm" 
                         variant="default"
-                        className="bg-blue-600 hover:bg-blue-700"
                         onClick={() => { setSelectedProvider(p); setActionType("REINSTATE"); }}
                       >
                         Reinstate
@@ -213,7 +211,7 @@ export function VerifyClient({ initialProviders, currentStatus, locale }: { init
           <div className="space-y-4 py-4">
             <div className="space-y-2">
               <Label htmlFor="notes">
-                Reason / Notes {(actionType === "REJECT" || actionType === "SUSPEND") && <span className="text-red-500">*</span>}
+                Reason / Notes {(actionType === "REJECT" || actionType === "SUSPEND") && <span className="text-destructive">*</span>}
               </Label>
               <Textarea 
                 id="notes" 

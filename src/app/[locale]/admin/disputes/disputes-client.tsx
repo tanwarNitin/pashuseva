@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Loader2, AlertTriangle, CheckCircle, XCircle } from "lucide-react";
 import { resolveDisputeRequestAction } from "@/actions/request.actions";
+import { PageShell } from "@/components/layout/page-shell";
 
 export interface DisputedRequest {
   id: string;
@@ -59,50 +60,48 @@ export default function DisputesClient({ initialDisputes }: { initialDisputes: D
   };
 
   return (
-    <div className="max-w-5xl mx-auto py-8 px-4 space-y-6">
-      <div className="flex justify-between items-end">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Disputes Queue</h1>
-          <p className="text-gray-500 mt-2">Manage and resolve disputed service requests</p>
-        </div>
-        <Badge variant="secondary" className="text-sm px-3 py-1 bg-red-100 text-red-700">
+    <PageShell
+      title="Disputes Queue"
+      subtitle="Manage and resolve disputed service requests"
+      primaryAction={
+        <Badge variant="destructive" className="text-sm px-3 py-1">
           {disputes.length} Pending
         </Badge>
-      </div>
-
+      }
+    >
       {disputes.length === 0 ? (
         <Card className="border-dashed shadow-sm">
-          <CardContent className="p-12 text-center text-gray-500">
-            <CheckCircle className="mx-auto h-12 w-12 text-emerald-500 mb-4 opacity-50" />
+          <CardContent className="p-12 text-center text-muted-foreground">
+            <CheckCircle className="mx-auto h-12 w-12 text-primary mb-4 opacity-50" />
             <p>No disputed requests at the moment. Good job!</p>
           </CardContent>
         </Card>
       ) : (
         <div className="grid gap-4">
           {disputes.map((dispute) => (
-            <Card key={dispute.id} className="border-l-4 border-l-red-500 shadow-sm hover:shadow transition-shadow">
+            <Card key={dispute.id} className="border-l-4 border-l-destructive shadow-sm hover:shadow transition-shadow">
               <CardHeader className="pb-3">
                 <div className="flex justify-between items-start">
                   <div>
-                    <CardTitle className="flex items-center gap-2 text-lg">
-                      <AlertTriangle className="h-5 w-5 text-red-500" />
+                    <CardTitle className="flex items-center gap-2 text-lg text-foreground">
+                      <AlertTriangle className="h-5 w-5 text-destructive" />
                       {dispute.farmerName} 
-                      <span className="text-sm text-gray-500 font-normal">({dispute.farmerPhone})</span>
+                      <span className="text-sm text-muted-foreground font-normal">({dispute.farmerPhone})</span>
                     </CardTitle>
                     <CardDescription className="mt-1">
                       {dispute.kind} • {dispute.serviceCode} • Created {new Date(dispute.createdAt).toLocaleString()}
                     </CardDescription>
                   </div>
-                  <Badge className="bg-red-100 text-red-700 hover:bg-red-100">
+                  <Badge variant="destructive">
                     {dispute.status}
                   </Badge>
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="flex items-center justify-end gap-3 mt-4 pt-4 border-t">
+                <div className="flex items-center justify-end gap-3 mt-4 pt-4 border-t border-border">
                   <Button 
                     variant="outline"
-                    className="text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                    className="text-muted-foreground hover:text-foreground hover:bg-accent"
                     disabled={isPending && resolvingId === dispute.id}
                     onClick={() => handleResolve(dispute.id, "CANCELLED")}
                   >
@@ -110,7 +109,7 @@ export default function DisputesClient({ initialDisputes }: { initialDisputes: D
                     Resolve as Cancelled
                   </Button>
                   <Button 
-                    className="bg-emerald-600 hover:bg-emerald-700 text-white"
+                    variant="default"
                     disabled={isPending && resolvingId === dispute.id}
                     onClick={() => handleResolve(dispute.id, "COMPLETED")}
                   >
@@ -123,6 +122,6 @@ export default function DisputesClient({ initialDisputes }: { initialDisputes: D
           ))}
         </div>
       )}
-    </div>
+    </PageShell>
   );
 }
