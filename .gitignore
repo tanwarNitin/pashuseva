@@ -56,3 +56,10 @@ test-cert.jpg
 playwright-report/
 
 
+
+design-system-screenshots.md
+.agents/
+.claude/
+skills-lock.json
+test-results/
+storage/documents/
