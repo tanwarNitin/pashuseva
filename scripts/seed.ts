@@ -185,6 +185,7 @@ async function seed() {
         latitude: "28.6139",
         longitude: "77.2090",
         locationSource: "GPS",
+        district: "Delhi",
       },
       // Available Provider 2: North Vet (Rohini ~14.5km North)
       {
@@ -205,6 +206,7 @@ async function seed() {
         latitude: "28.7041",
         longitude: "77.1025",
         locationSource: "GPS",
+        district: "Delhi",
       },
       // Available Provider 3: East Paravet (Noida ~20.5km East)
       {

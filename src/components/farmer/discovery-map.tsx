@@ -173,7 +173,7 @@ export default function DiscoveryMap({
       {/* Provider Details Section */}
       <div className="space-y-4">
         {selectedProvider ? (
-          <div className="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm flex items-end sm:items-center justify-center p-4 lg:static lg:p-0 lg:z-auto lg:bg-transparent lg:backdrop-blur-none lg:block animate-in fade-in duration-200">
+          <div className="fixed inset-0 z-50 bg-black/40 flex items-end sm:items-center justify-center p-4 lg:static lg:p-0 lg:z-auto lg:bg-transparent lg:block animate-in fade-in duration-200">
             <Card className="w-full max-w-lg max-h-[85vh] overflow-y-auto shadow-2xl lg:shadow-sm lg:sticky lg:top-4 lg:max-w-none animate-in slide-in-from-bottom-4 lg:animate-none">
               <CardHeader className="pb-3 sticky top-0 bg-card z-10 border-b border-border mb-4">
                 <div className="flex items-start justify-between">
