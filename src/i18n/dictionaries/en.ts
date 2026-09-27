@@ -138,6 +138,7 @@ export const en = {
     selectProvider: "Select a Provider",
     clickOnMapToSelect: "Click on a provider marker on the map to see details",
     providersNearby: "Providers Nearby",
+    closeDetails: "Close details",
     providersFound: "providers found",
     noProvidersFound: "No providers found",
     tryExpandingSearch: "Try expanding your search radius or changing the provider type",

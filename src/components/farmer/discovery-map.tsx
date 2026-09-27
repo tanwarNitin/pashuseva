@@ -9,7 +9,7 @@ import "leaflet/dist/leaflet.css";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Phone, MessageCircle, MapPin, Star, Clock, Filter } from "lucide-react";
+import { Phone, MessageCircle, MapPin, Star, Clock, Filter, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { ProviderWithDistance } from "@/types/discovery";
 
@@ -105,7 +105,7 @@ export default function DiscoveryMap({
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-full">
       {/* Map Section */}
-      <div className="lg:col-span-2 relative">
+      <div className="lg:col-span-2 relative z-0 isolate">
         <div className="h-full rounded-lg border bg-card">
           <MapContainer
             center={[centerLat, centerLng]}
@@ -173,20 +173,31 @@ export default function DiscoveryMap({
       {/* Provider Details Section */}
       <div className="space-y-4">
         {selectedProvider ? (
-          <Card className="sticky top-4">
-            <CardHeader className="pb-3">
-              <div className="flex items-start justify-between">
-                <div>
-                  <CardTitle>{selectedProvider.name}</CardTitle>
-                  <CardDescription>{selectedProvider.qualification}</CardDescription>
+          <div className="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm flex items-end sm:items-center justify-center p-4 lg:static lg:p-0 lg:z-auto lg:bg-transparent lg:backdrop-blur-none lg:block animate-in fade-in duration-200">
+            <Card className="w-full max-w-lg max-h-[85vh] overflow-y-auto shadow-2xl lg:shadow-sm lg:sticky lg:top-4 lg:max-w-none animate-in slide-in-from-bottom-4 lg:animate-none">
+              <CardHeader className="pb-3 sticky top-0 bg-card z-10 border-b border-border mb-4">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <CardTitle>{selectedProvider.name}</CardTitle>
+                    <CardDescription>{selectedProvider.qualification}</CardDescription>
+                  </div>
+                  <Button 
+                    variant="ghost" 
+                    onClick={() => setSelectedProvider(null)}
+                    className="h-[44px] px-3 -mr-2 text-muted-foreground hover:text-foreground"
+                    aria-label={dict.discovery.closeDetails}
+                    title={dict.discovery.closeDetails}
+                  >
+                    <span className="hidden sm:inline mr-2">{dict.discovery.closeDetails}</span>
+                    <X className="h-5 w-5" />
+                  </Button>
                 </div>
-                <Badge className={getProviderTypeColor(selectedProvider.providerType)}>
+                <Badge className={`w-fit mt-3 ${getProviderTypeColor(selectedProvider.providerType)}`}>
                   {selectedProvider.providerType === "VET_DOCTOR"
                     ? dict.discovery.vetDoctor
                     : dict.discovery.paravetWorker}
                 </Badge>
-              </div>
-            </CardHeader>
+              </CardHeader>
 
             <CardContent className="space-y-4">
               <div className="grid grid-cols-2 gap-4 text-sm">
@@ -270,7 +281,8 @@ export default function DiscoveryMap({
                 </div>
               </div>
             </CardContent>
-          </Card>
+            </Card>
+          </div>
         ) : (
           <Card className="bg-muted/50">
             <CardContent className="flex items-center justify-center py-12">

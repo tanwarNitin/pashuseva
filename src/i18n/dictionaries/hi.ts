@@ -140,6 +140,7 @@ export const hi: Dictionary = {
     selectProvider: "प्रदाता चुनें",
     clickOnMapToSelect: "नक्शे पर एक प्रदाता मार्कर पर क्लिक करके विवरण देखें",
     providersNearby: "नजदीकी प्रदाता",
+    closeDetails: "विवरण बंद करें",
     providersFound: "प्रदाता मिले",
     noProvidersFound: "नहीं मिला",
     tryExpandingSearch: "अपनी खोज त्रिज्या बढ़ाएं या प्रदाता प्रकार बदलें",
