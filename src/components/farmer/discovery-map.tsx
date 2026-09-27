@@ -31,7 +31,7 @@ interface DiscoveryMapProps {
   farmerLocation: {
     latitude: string;
     longitude: string;
-  };
+  } | null;
   onProviderSelect?: (provider: ProviderWithDistance) => void;
 }
 
@@ -53,7 +53,7 @@ export default function DiscoveryMap({
     if (filters.providerType && provider.providerType !== filters.providerType) {
       return false;
     }
-    if (provider.distanceMeters > filters.maxDistance) {
+    if (provider.distanceMeters !== null && provider.distanceMeters > filters.maxDistance) {
       return false;
     }
     return true;
@@ -80,7 +80,8 @@ export default function DiscoveryMap({
       : "bg-green-100 text-green-800 border-green-300";
   };
 
-  const getDistanceText = (meters: number) => {
+  const getDistanceText = (meters: number | null) => {
+    if (meters === null) return "Distance N/A";
     if (meters < 1000) {
       return `${meters}m`;
     } else if (meters < 10000) {
@@ -90,14 +91,25 @@ export default function DiscoveryMap({
     }
   };
 
+  // Determine center based on farmer location or provider bounds
+  let centerLat = 28.6139; // Default (Delhi)
+  let centerLng = 77.2090;
+  if (farmerLocation) {
+    centerLat = parseFloat(farmerLocation.latitude);
+    centerLng = parseFloat(farmerLocation.longitude);
+  } else if (providers.length > 0) {
+    centerLat = providers.reduce((sum, p) => sum + parseFloat(p.latitude), 0) / providers.length;
+    centerLng = providers.reduce((sum, p) => sum + parseFloat(p.longitude), 0) / providers.length;
+  }
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-full">
       {/* Map Section */}
       <div className="lg:col-span-2 relative">
         <div className="h-full rounded-lg border bg-card">
           <MapContainer
-            center={[parseFloat(farmerLocation.latitude), parseFloat(farmerLocation.longitude)]}
-            zoom={13}
+            center={[centerLat, centerLng]}
+            zoom={farmerLocation ? 13 : 11}
             style={{ height: "600px", width: "100%" }}
           >
             <TileLayer
@@ -105,19 +117,21 @@ export default function DiscoveryMap({
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             {/* Farmer location marker */}
-            <Marker
-              position={[parseFloat(farmerLocation.latitude), parseFloat(farmerLocation.longitude)]}
-              icon={markerIcon}
-            >
-              <Popup>
-                <div className="text-sm">
-                  <strong>{dict.discovery.farmerLocation}</strong>
-                </div>
-              </Popup>
-            </Marker>
+            {farmerLocation && (
+              <Marker
+                position={[parseFloat(farmerLocation.latitude), parseFloat(farmerLocation.longitude)]}
+                icon={markerIcon}
+              >
+                <Popup>
+                  <div className="text-sm">
+                    <strong>{dict.discovery.farmerLocation}</strong>
+                  </div>
+                </Popup>
+              </Marker>
+            )}
 
             {/* Provider markers */}
-            {filteredProviders.map((provider) => (
+            {providers.map((provider) => (
               <Marker
                 key={provider.id}
                 position={[parseFloat(provider.latitude), parseFloat(provider.longitude)]}
@@ -143,80 +157,17 @@ export default function DiscoveryMap({
                       <Star className="h-3 w-3 text-yellow-500 opacity-50" />
                       <span className="text-xs text-muted-foreground">No ratings yet</span>
                     </div>
-                    <div className="text-xs font-medium mb-2">
-                      {provider.distanceMeters < 5000 ? "Nearby" : "Within range"}
-                    </div>
+                    {provider.distanceMeters !== null && (
+                      <div className="text-xs font-medium mb-2">
+                        {provider.distanceMeters < 5000 ? "Nearby" : "Within range"}
+                      </div>
+                    )}
                   </div>
                 </Popup>
               </Marker>
             ))}
           </MapContainer>
         </div>
-
-        {/* Filters */}
-        <Card className="mt-4">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Filter className="h-5 w-5" />
-              {dict.discovery.filters}
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div>
-              <label className="text-sm font-medium mb-2 block">
-                {dict.discovery.providerType}
-              </label>
-              <div className="flex gap-2">
-                <Button
-                  variant={filters.providerType === null ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setFilters({ ...filters, providerType: null })}
-                >
-                  {dict.discovery.all}
-                </Button>
-                <Button
-                  variant={filters.providerType === "VET_DOCTOR" ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setFilters({ ...filters, providerType: "VET_DOCTOR" })}
-                  className="border-blue-300 hover:bg-blue-50"
-                >
-                  {dict.discovery.vetDoctors}
-                </Button>
-                <Button
-                  variant={filters.providerType === "PARAVET_WORKER" ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setFilters({ ...filters, providerType: "PARAVET_WORKER" })}
-                  className="border-green-300 hover:bg-green-50"
-                >
-                  {dict.discovery.paravetWorkers}
-                </Button>
-              </div>
-            </div>
-
-            <div>
-              <label className="text-sm font-medium mb-2 block">
-                {dict.discovery.maxDistance} ({getDistanceText(filters.maxDistance)})
-              </label>
-              <input
-                type="range"
-                min="1000"
-                max="100000"
-                step="1000"
-                value={filters.maxDistance}
-                onChange={(e) => setFilters({ ...filters, maxDistance: parseInt(e.target.value) })}
-                className="w-full"
-              />
-              <div className="flex justify-between text-xs text-muted-foreground mt-1">
-                <span>1km</span>
-                <span>100km</span>
-              </div>
-            </div>
-
-            <div className="text-sm text-muted-foreground">
-              {filteredProviders.length} {dict.discovery.providersFound}
-            </div>
-          </CardContent>
-        </Card>
       </div>
 
       {/* Provider Details Section */}
@@ -342,7 +293,7 @@ export default function DiscoveryMap({
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
-            {filteredProviders.slice(0, 5).map((provider) => (
+            {providers.slice(0, 5).map((provider) => (
               <div
                 key={provider.id}
                 className={`p-3 rounded-lg border cursor-pointer transition-colors hover:bg-muted/50 ${selectedProvider?.id === provider.id ? "bg-muted" : ""}`}

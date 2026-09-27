@@ -129,10 +129,10 @@ export async function createServiceRequest(
           requestId: request.id,
           providerId: provider.userId,
           offerStatus: "PENDING",
-          distanceMSnapshot: provider.distanceMeters,
+          distanceMSnapshot: provider.distanceMeters ?? 0,
           baseVisitFeePaiseSnapshot: provider.baseVisitFeePaise,
           perKmFeePaiseSnapshot: provider.perKmFeePaise,
-          estimatedTotalPaiseSnapshot: provider.feeBreakdown.totalFeePaise,
+          estimatedTotalPaiseSnapshot: provider.feeBreakdown?.totalFeePaise ?? provider.baseVisitFeePaise,
         }));
 
         await db.insert(serviceRequestRecipients).values(recipientsToInsert);

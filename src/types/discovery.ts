@@ -20,12 +20,13 @@ export type ProviderWithDistance = {
   preferWhatsApp: boolean;
   latitude: string;
   longitude: string;
-  distanceMeters: number;
-  feeBreakdown: FeeBreakdown;
+  distanceMeters: number | null;
+  feeBreakdown: FeeBreakdown | null;
 };
 
 export type DiscoveryFilters = {
   requestType?: "SOS" | "ROUTINE";
   maxDistanceMeters?: number;
   providerType?: "VET_DOCTOR" | "PARAVET_WORKER";
+  searchQuery?: string;
 };

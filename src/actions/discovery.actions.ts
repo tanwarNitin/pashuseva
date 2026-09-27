@@ -9,11 +9,12 @@ import { isAppError } from "@/lib/errors";
 
 // Validation schemas
 const discoverProvidersSchema = z.object({
-  latitude: z.string(),
-  longitude: z.string(),
+  latitude: z.string().optional(),
+  longitude: z.string().optional(),
   requestType: z.enum(["SOS", "ROUTINE"]).optional(),
   maxDistanceMeters: z.number().min(1000).max(100000).optional(),
   providerType: z.enum(["VET_DOCTOR", "PARAVET_WORKER"]).optional(),
+  searchQuery: z.string().optional(),
 });
 
 export type DiscoverProvidersInput = z.infer<typeof discoverProvidersSchema>;
@@ -31,13 +32,14 @@ export async function discoverProvidersAction(
   try {
     // Parse and validate input
     const input = discoverProvidersSchema.parse({
-      latitude: formData.get("latitude"),
-      longitude: formData.get("longitude"),
+      latitude: formData.get("latitude") || undefined,
+      longitude: formData.get("longitude") || undefined,
       requestType: formData.get("requestType") || undefined,
       maxDistanceMeters: formData.get("maxDistanceMeters")
         ? parseInt(formData.get("maxDistanceMeters") as string)
         : undefined,
       providerType: formData.get("providerType") || undefined,
+      searchQuery: formData.get("searchQuery") || undefined,
     });
 
     // Allow public discovery (farmerId is optional on discover page)
@@ -46,16 +48,20 @@ export async function discoverProvidersAction(
       // If logged in as non-farmer (e.g. provider or admin), still allow viewing
     }
 
+    const latitude = input.latitude ? parseFloat(input.latitude) : undefined;
+    const longitude = input.longitude ? parseFloat(input.longitude) : undefined;
+    const farmerLocation = (latitude !== undefined && longitude !== undefined && !isNaN(latitude) && !isNaN(longitude))
+      ? { latitude, longitude }
+      : null;
+
     // Discover nearby providers
     const providers = await discoverNearbyProviders(
-      {
-        latitude: parseFloat(input.latitude),
-        longitude: parseFloat(input.longitude),
-      },
+      farmerLocation,
       {
         requestType: input.requestType,
         maxDistanceMeters: input.maxDistanceMeters,
         providerType: input.providerType,
+        searchQuery: input.searchQuery,
       }
     );
 
