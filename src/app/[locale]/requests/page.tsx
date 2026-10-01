@@ -74,77 +74,113 @@ export default async function RequestsPage({ params }: PageProps) {
         </div>
       }
     >
-      <Tabs defaultValue="routine" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-2 max-w-[400px]">
-            <TabsTrigger value="routine">{dict.discovery.routine}</TabsTrigger>
-            <TabsTrigger value="sos">{dict.discovery.emergency}</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="routine">
-            <RoutineClient bookings={routineBookings} locale={locale} />
-          </TabsContent>
-
-          <TabsContent value="sos">
-            {requests.length === 0 ? (
-              <Card>
-                <CardContent className="flex items-center justify-center py-12">
-                  <div className="text-center">
-                    <Calendar className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                    <h3 className="font-medium mb-2">{dict.requests.noRequests}</h3>
-                    <p className="text-sm text-muted-foreground mb-4">{dict.requests.noRequestsDesc}</p>
-                    <Link href={`/${locale}/discover`}>
-                      <Button>{dict.requests.createRequest}</Button>
-                    </Link>
-                  </div>
-                </CardContent>
-              </Card>
-            ) : (
-              <div className="space-y-4">
-                {requests.map((request) => (
-                  <Card key={request.id}>
-                    <CardHeader>
-                      <div className="flex justify-between items-start">
-                        <div>
-                          <CardTitle className="text-lg">{request.animalName || dict.requests.animalUnknown}</CardTitle>
-                          <CardDescription>{dict.requests.requestId}: {request.id.slice(0, 8)}...</CardDescription>
-                        </div>
-                        {getRequestStatusBadge(request.status, dict)}
-                      </div>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
-                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                          <Stethoscope className="w-4 h-4" />
-                          <span>{request.kind === "SOS" ? dict.requests.emergency : dict.requests.routine}</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                          <Clock className="w-4 h-4" />
-                          <span>{new Date(request.createdAt).toLocaleDateString(locale)}</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                          <MapPin className="w-4 h-4" />
-                          <span>{request.locationDescription || request.locationSource}</span>
-                        </div>
-                      </div>
-
-                      <div className="pt-4 border-t border-border flex items-center justify-between">
-                        <div className="text-sm text-muted-foreground">
-                          Service: {request.serviceCode}
-                        </div>
-                        <Link href={`/${locale}/cattle/${request.animalId}`}>
-                          <Button variant="ghost" size="sm">
-                            {dict.requests.viewDetails}
-                            <ChevronRight className="w-4 h-4 ml-1" />
-                          </Button>
-                        </Link>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-6">
+        {/* Left Column - Dashboard Sidebar/Info */}
+        <div className="lg:col-span-4 space-y-6">
+          <Card className="bg-primary/5 border-primary/20 shadow-none">
+            <CardHeader>
+              <CardTitle className="text-lg flex items-center gap-2">
+                <MapPin className="h-5 w-5 text-primary" />
+                {dict.nav.requests}
+              </CardTitle>
+              <CardDescription>
+                {dict.requests.subtitle}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="bg-background rounded-lg p-4 border border-border">
+                <div className="text-sm text-muted-foreground mb-1">{dict.discovery.routine}</div>
+                <div className="text-2xl font-bold">{routineBookings.length}</div>
               </div>
-            )}
-          </TabsContent>
-        </Tabs>
+              <div className="bg-background rounded-lg p-4 border border-border">
+                <div className="text-sm text-muted-foreground mb-1">{dict.discovery.emergency}</div>
+                <div className="text-2xl font-bold">{requests.length}</div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Right Column - Main Content (Tabs) */}
+        <div className="lg:col-span-8">
+          <Tabs defaultValue="routine" className="space-y-6">
+            <TabsList className="grid w-full grid-cols-2 max-w-[400px] h-12 rounded-full p-1 bg-muted/50 border border-border">
+              <TabsTrigger value="routine" className="rounded-full data-[state=active]:bg-background data-[state=active]:shadow-sm transition-all duration-200">
+                {dict.discovery.routine}
+              </TabsTrigger>
+              <TabsTrigger value="sos" className="rounded-full data-[state=active]:bg-background data-[state=active]:shadow-sm transition-all duration-200">
+                {dict.discovery.emergency}
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="routine" className="mt-6 focus-visible:outline-none focus-visible:ring-0">
+              <RoutineClient bookings={routineBookings} locale={locale} />
+            </TabsContent>
+
+            <TabsContent value="sos" className="mt-6 focus-visible:outline-none focus-visible:ring-0">
+              {requests.length === 0 ? (
+                <Card className="border-dashed shadow-none bg-muted/20">
+                  <CardContent className="flex items-center justify-center py-16">
+                    <div className="text-center">
+                      <div className="bg-background w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 border border-border shadow-sm">
+                        <Calendar className="h-8 w-8 text-muted-foreground" />
+                      </div>
+                      <h3 className="font-semibold text-lg mb-2">{dict.requests.noRequests}</h3>
+                      <p className="text-sm text-muted-foreground mb-6 max-w-sm mx-auto">{dict.requests.noRequestsDesc}</p>
+                      <Link href={`/${locale}/discover`}>
+                        <Button className="h-11 px-8 rounded-full shadow-sm">{dict.requests.createRequest}</Button>
+                      </Link>
+                    </div>
+                  </CardContent>
+                </Card>
+              ) : (
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+                  {requests.map((request) => (
+                    <Card key={request.id} className="overflow-hidden group hover:shadow-md transition-all duration-200 border-border/60">
+                      <CardHeader className="bg-muted/20 border-b border-border pb-4">
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <CardTitle className="text-lg">{request.animalName || dict.requests.animalUnknown}</CardTitle>
+                            <CardDescription className="font-mono text-xs mt-1">{dict.requests.requestId}: {request.id.slice(0, 8)}</CardDescription>
+                          </div>
+                          {getRequestStatusBadge(request.status, dict)}
+                        </div>
+                      </CardHeader>
+                      <CardContent className="p-0">
+                        <div className="p-4 space-y-3">
+                          <div className="flex items-start gap-3 text-sm text-foreground">
+                            <Stethoscope className="w-4 h-4 text-primary mt-0.5" />
+                            <span className="font-medium">{request.kind === "SOS" ? dict.requests.emergency : dict.requests.routine}</span>
+                          </div>
+                          <div className="flex items-start gap-3 text-sm text-foreground">
+                            <Clock className="w-4 h-4 text-primary mt-0.5" />
+                            <span>{new Date(request.createdAt).toLocaleDateString(locale)}</span>
+                          </div>
+                          <div className="flex items-start gap-3 text-sm text-foreground">
+                            <MapPin className="w-4 h-4 text-primary mt-0.5 shrink-0" />
+                            <span className="line-clamp-2">{request.locationDescription || request.locationSource}</span>
+                          </div>
+                        </div>
+
+                        <div className="p-4 pt-0 mt-2 flex items-center justify-between">
+                          <div className="text-xs px-2 py-1 bg-muted rounded-md text-muted-foreground font-medium">
+                            {request.serviceCode}
+                          </div>
+                          <Link href={`/${locale}/cattle/${request.animalId}`}>
+                            <Button variant="ghost" size="sm" className="h-9 group-hover:bg-primary/10 group-hover:text-primary transition-colors">
+                              {dict.requests.viewDetails}
+                              <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
+                            </Button>
+                          </Link>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              )}
+            </TabsContent>
+          </Tabs>
+        </div>
+      </div>
     </PageShell>
   );
 }
