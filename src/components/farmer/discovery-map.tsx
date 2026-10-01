@@ -184,9 +184,15 @@ export default function DiscoveryMap({
                     <span className="text-xs text-muted-foreground">No ratings yet</span>
                   </div>
                   {provider.distanceMeters !== null && (
-                    <div className="text-xs font-medium mb-2">
-                      {provider.distanceMeters < 5000 ? "Nearby" : "Within range"}
-                    </div>
+                    provider.distanceMeters < 5000 ? (
+                      <div className="text-xs font-medium mb-2">
+                        {dict.discovery.nearby}
+                      </div>
+                    ) : (provider.serviceRadiusMeters != null && provider.distanceMeters <= provider.serviceRadiusMeters) ? (
+                      <div className="text-xs font-medium mb-2">
+                        {dict.discovery.withinRange}
+                      </div>
+                    ) : null
                   )}
                 </div>
               </Popup>
