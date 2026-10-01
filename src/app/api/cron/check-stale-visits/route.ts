@@ -39,7 +39,7 @@ export async function GET(req: Request) {
 
     if (toFlag.length > 0) {
       const ids = toFlag.map((r) => r.id);
-
+      
       // We don't change the status, just set the adminFlagged boolean
       await db.transaction(async (tx) => {
         for (const id of ids) {
@@ -47,7 +47,7 @@ export async function GET(req: Request) {
             .update(serviceRequests)
             .set({ adminFlagged: true })
             .where(eq(serviceRequests.id, id));
-
+            
           await tx.insert(serviceRequestEvents).values({
             requestId: id,
             eventType: "ADMIN_FLAGGED",
@@ -61,9 +61,9 @@ export async function GET(req: Request) {
     // 3. Handle IN_PROGRESS >= 6 hours, < 24 hours (nudge provider)
     // Not yet nudged, statusChangedAt <= 6h ago
     const toNudge = await db
-      .select({
+      .select({ 
         id: serviceRequests.id,
-        providerId: serviceRequests.acceptedProviderId
+        providerId: serviceRequests.acceptedProviderId 
       })
       .from(serviceRequests)
       .where(
@@ -91,7 +91,7 @@ export async function GET(req: Request) {
 
       for (const reqData of toNudge) {
         if (!reqData.providerId) continue;
-
+        
         await db
           .update(serviceRequests)
           .set({ providerNudgedAt: now })
@@ -105,10 +105,10 @@ export async function GET(req: Request) {
         if (provider) {
           const locale = provider.preferredLocale === "hi" ? "hi" : "en";
           const title = locale === "hi" ? "यात्रा प्रगति पर है" : "Visit Still In Progress";
-          const body = locale === "hi"
-            ? "आपकी यात्रा अभी भी प्रगति पर है। समाप्त होने पर इसे पूरा चिह्नित करें।"
+          const body = locale === "hi" 
+            ? "आपकी यात्रा अभी भी प्रगति पर है। समाप्त होने पर इसे पूरा चिह्नित करें।" 
             : "Your visit is still marked in progress — mark it done when finished.";
-
+            
           await sendPush(reqData.providerId, {
             title,
             body,
@@ -132,19 +132,19 @@ export async function GET(req: Request) {
 
     if (toComplete.length > 0) {
       const ids = toComplete.map((r) => r.id);
-
+      
       await db.transaction(async (tx) => {
         for (const id of ids) {
           await tx
             .update(serviceRequests)
-            .set({
-              status: "COMPLETED",
+            .set({ 
+              status: "COMPLETED", 
               completedAt: now,
               updatedAt: now,
-              statusChangedAt: now
+              statusChangedAt: now 
             })
             .where(eq(serviceRequests.id, id));
-
+            
           await tx.insert(serviceRequestEvents).values({
             requestId: id,
             eventType: "COMPLETED", // Using COMPLETED to represent farmer silent confirmation
