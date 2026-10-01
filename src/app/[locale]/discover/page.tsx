@@ -21,32 +21,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function DiscoverPage({ params }: PageProps) {
   const { locale: localeParam } = await params;
   const locale = getLocaleOrDefault(localeParam);
-  const dict = await getDictionary(locale);
   const session = await getCurrentSession();
   const farmerId = session?.user?.id || null;
 
   return (
-    <main className="min-h-screen bg-background flex flex-col">
-      {/* Compact Branded Strip */}
-      <div className="bg-primary border-b border-border py-4 relative overflow-hidden shrink-0">
-        <div className="container mx-auto px-4 relative z-10 flex flex-col md:flex-row items-center justify-between gap-2">
-          <div className="text-center md:text-left">
-            <h1 className="text-xl md:text-2xl font-bold text-primary-foreground tracking-tight">
-              {dict.discovery.title}
-            </h1>
-            <p className="text-sm md:text-base text-primary-foreground/90 font-medium">
-              {dict.discovery.subtitle}
-            </p>
-          </div>
-        </div>
-        {/* Subtle decorative element */}
-        <div className="absolute right-0 top-0 w-32 h-full bg-white/10 skew-x-12 translate-x-4"></div>
-      </div>
-
-      {/* Main Content Area - Fill remaining height */}
-      <div className="container mx-auto px-4 py-4 md:py-6 flex-1 flex flex-col">
-        <DiscoveryClient farmerId={farmerId} locale={locale} />
-      </div>
+    <main className="relative flex-1 flex flex-col w-full h-[calc(100dvh-64px)] overflow-hidden bg-background">
+      <DiscoveryClient farmerId={farmerId} locale={locale} />
     </main>
   );
 }

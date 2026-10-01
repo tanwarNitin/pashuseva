@@ -121,111 +121,109 @@ export default function DiscoveryMap({
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-full">
+    <div className="absolute inset-0 w-full h-full overflow-hidden">
       {/* Map Section */}
-      <div className="lg:col-span-2 relative z-0 isolate">
-        <div className="h-full rounded-lg border bg-card">
-          <MapContainer
-            ref={mapRef}
-            center={[centerLat, centerLng]}
-            zoom={farmerLocation ? 13 : 11}
-            style={{ height: "600px", width: "100%" }}
-          >
-            <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            {/* Farmer location marker */}
-            {farmerLocation && (
-              <Marker
-                position={[parseFloat(farmerLocation.latitude), parseFloat(farmerLocation.longitude)]}
-                icon={markerIcon}
-              >
-                <Popup>
-                  <div className="text-sm">
-                    <strong>{dict.discovery.farmerLocation}</strong>
-                  </div>
-                </Popup>
-              </Marker>
-            )}
+      <div className="absolute inset-0 z-0 isolate">
+        <MapContainer
+          ref={mapRef}
+          center={[centerLat, centerLng]}
+          zoom={farmerLocation ? 13 : 11}
+          style={{ height: "100%", width: "100%" }}
+          zoomControl={false}
+        >
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          {/* Farmer location marker */}
+          {farmerLocation && (
+            <Marker
+              position={[parseFloat(farmerLocation.latitude), parseFloat(farmerLocation.longitude)]}
+              icon={markerIcon}
+            >
+              <Popup>
+                <div className="text-sm">
+                  <strong>{dict.discovery.farmerLocation}</strong>
+                </div>
+              </Popup>
+            </Marker>
+          )}
 
-            {/* Provider markers */}
-            {providers.map((provider) => (
-              <Marker
-                key={provider.id}
-                ref={(node) => {
-                  if (node) {
-                    markerRefs.current[provider.id] = node;
-                  } else {
-                    delete markerRefs.current[provider.id];
-                  }
-                }}
-                position={[parseFloat(provider.latitude), parseFloat(provider.longitude)]}
-                icon={markerIcon}
-                eventHandlers={{
-                  click: () => handleProviderClick(provider),
-                }}
-              >
-                <Popup>
-                  <div className="text-sm max-w-xs">
-                    <div className="font-semibold text-base mb-1">
-                      {provider.name}
-                    </div>
-                    <div className="text-xs text-muted-foreground mb-2">
-                      {provider.qualification}
-                    </div>
-                    
-                    <div className="flex items-center gap-1 mb-2">
-                      <MapPin className="h-3 w-3" />
-                      <span className="text-xs">Distance: {getDistanceText(provider.distanceMeters)}</span>
-                    </div>
-                    <div className="flex items-center gap-1 mb-2">
-                      <Star className="h-3 w-3 text-yellow-500 opacity-50" />
-                      <span className="text-xs text-muted-foreground">No ratings yet</span>
-                    </div>
-                    {provider.distanceMeters !== null && (
-                      <div className="text-xs font-medium mb-2">
-                        {provider.distanceMeters < 5000 ? "Nearby" : "Within range"}
-                      </div>
-                    )}
+          {/* Provider markers */}
+          {providers.map((provider) => (
+            <Marker
+              key={provider.id}
+              ref={(node) => {
+                if (node) {
+                  markerRefs.current[provider.id] = node;
+                } else {
+                  delete markerRefs.current[provider.id];
+                }
+              }}
+              position={[parseFloat(provider.latitude), parseFloat(provider.longitude)]}
+              icon={markerIcon}
+              eventHandlers={{
+                click: () => handleProviderClick(provider),
+              }}
+            >
+              <Popup>
+                <div className="text-sm max-w-xs">
+                  <div className="font-semibold text-base mb-1">
+                    {provider.name}
                   </div>
-                </Popup>
-              </Marker>
-            ))}
-          </MapContainer>
-        </div>
+                  <div className="text-xs text-muted-foreground mb-2">
+                    {provider.qualification}
+                  </div>
+                  
+                  <div className="flex items-center gap-1 mb-2">
+                    <MapPin className="h-3 w-3" />
+                    <span className="text-xs">Distance: {getDistanceText(provider.distanceMeters)}</span>
+                  </div>
+                  <div className="flex items-center gap-1 mb-2">
+                    <Star className="h-3 w-3 text-yellow-500 opacity-50" />
+                    <span className="text-xs text-muted-foreground">No ratings yet</span>
+                  </div>
+                  {provider.distanceMeters !== null && (
+                    <div className="text-xs font-medium mb-2">
+                      {provider.distanceMeters < 5000 ? "Nearby" : "Within range"}
+                    </div>
+                  )}
+                </div>
+              </Popup>
+            </Marker>
+          ))}
+        </MapContainer>
       </div>
 
-      {/* Provider Details Section */}
-      <div className="space-y-4">
-        {selectedProvider ? (
-          <div className="fixed inset-0 z-50 bg-black/40 flex items-end sm:items-center justify-center p-4 lg:static lg:p-0 lg:z-auto lg:bg-transparent lg:block animate-in fade-in duration-200">
-            <Card className="w-full max-w-lg max-h-[85vh] overflow-y-auto shadow-2xl lg:shadow-sm lg:sticky lg:top-4 lg:max-w-none animate-in slide-in-from-bottom-4 lg:animate-none">
-              <CardHeader className="pb-3 sticky top-0 bg-card z-10 border-b border-border mb-4">
-                <div className="flex items-start justify-between">
-                  <div>
-                    <CardTitle>{selectedProvider.name}</CardTitle>
-                    <CardDescription>{selectedProvider.qualification}</CardDescription>
-                  </div>
-                  <Button 
-                    variant="ghost" 
-                    onClick={() => setSelectedProvider(null)}
-                    className="h-[44px] px-3 -mr-2 text-muted-foreground hover:text-foreground"
-                    aria-label={dict.discovery.closeDetails}
-                    title={dict.discovery.closeDetails}
-                  >
-                    <span className="hidden sm:inline mr-2">{dict.discovery.closeDetails}</span>
-                    <X className="h-5 w-5" />
-                  </Button>
+      {/* Detail Overlay (Desktop sidebar / Mobile bottom sheet) */}
+      {selectedProvider && (
+        <div className="absolute inset-0 z-50 pointer-events-none flex items-end sm:items-start justify-end p-0 sm:p-4">
+          <div className="absolute inset-0 bg-black/20 sm:hidden pointer-events-auto" onClick={() => setSelectedProvider(null)} />
+          <Card id="provider-detail-panel" className="w-full sm:w-[400px] h-[85vh] sm:h-auto sm:max-h-[calc(100vh-8rem)] overflow-y-auto shadow-2xl pointer-events-auto rounded-t-xl sm:rounded-xl rounded-b-none sm:rounded-b-xl border-t sm:border animate-in slide-in-from-bottom-full sm:slide-in-from-right-8 duration-200">
+            <CardHeader className="pb-3 sticky top-0 bg-card z-10 border-b border-border">
+              <div className="flex items-start justify-between">
+                <div>
+                  <CardTitle>{selectedProvider.name}</CardTitle>
+                  <CardDescription>{selectedProvider.qualification}</CardDescription>
                 </div>
-                <Badge className={`w-fit mt-3 ${getProviderTypeColor(selectedProvider.providerType)}`}>
-                  {selectedProvider.providerType === "VET_DOCTOR"
-                    ? dict.discovery.vetDoctor
-                    : dict.discovery.paravetWorker}
-                </Badge>
-              </CardHeader>
+                <Button 
+                  variant="ghost" 
+                  onClick={() => setSelectedProvider(null)}
+                  className="h-[44px] w-[44px] px-0 text-muted-foreground hover:text-foreground"
+                  aria-label={dict.discovery.closeDetails}
+                  title={dict.discovery.closeDetails}
+                >
+                  <X className="h-5 w-5" />
+                </Button>
+              </div>
+              <Badge className={`w-fit mt-3 ${getProviderTypeColor(selectedProvider.providerType)}`}>
+                {selectedProvider.providerType === "VET_DOCTOR"
+                  ? dict.discovery.vetDoctor
+                  : dict.discovery.paravetWorker}
+              </Badge>
+            </CardHeader>
 
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 pt-4">
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div className="flex items-center gap-2">
                   <MapPin className="h-4 w-4 text-muted-foreground" />
@@ -237,10 +235,13 @@ export default function DiscoveryMap({
                 </div>
                 <div className="flex items-center gap-2">
                   <Clock className="h-4 w-4 text-muted-foreground" />
-                  <span>Available now</span>
+                  <span className="flex items-center gap-1">
+                    <span className="h-2 w-2 rounded-full bg-green-500"></span>
+                    Available
+                  </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="h-4 w-4 text-muted-foreground font-bold">₹</span>
+                  <span className="h-4 w-4 text-muted-foreground font-bold text-center">₹</span>
                   <span>{selectedProvider.baseVisitFeePaise / 100} - {(selectedProvider.baseVisitFeePaise + selectedProvider.perKmFeePaise * 1000) / 100}</span>
                 </div>
               </div>
@@ -265,7 +266,7 @@ export default function DiscoveryMap({
                   <div className="flex gap-2">
                     <Button
                       size="sm"
-                      className="flex-1"
+                      className="flex-1 h-[44px]"
                       onClick={(e) => handleContactProvider(selectedProvider, e)}
                     >
                       <Phone className="h-4 w-4 mr-2" />
@@ -274,7 +275,7 @@ export default function DiscoveryMap({
                     <Button
                       size="sm"
                       variant="outline"
-                      className="flex-1"
+                      className="flex-1 h-[44px]"
                       onClick={(e) => handleRequestService(selectedProvider, e)}
                     >
                       <MessageCircle className="h-4 w-4 mr-2" />
@@ -284,7 +285,7 @@ export default function DiscoveryMap({
                   <Button
                     size="sm"
                     variant="outline"
-                    className="w-full border-blue-200 hover:bg-blue-50 text-blue-700"
+                    className="w-full h-[44px] border-blue-200 hover:bg-blue-50 text-blue-700"
                     onClick={(e) => {
                       e.stopPropagation();
                       router.push(`/book/${selectedProvider.id}`);
@@ -307,61 +308,52 @@ export default function DiscoveryMap({
                 </div>
               </div>
             </CardContent>
-            </Card>
-          </div>
-        ) : (
-          <Card className="bg-muted/50">
-            <CardContent className="flex items-center justify-center py-12">
-              <div className="text-center">
-                <MapPin className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                <h3 className="font-medium mb-2">{dict.discovery.selectProvider}</h3>
-                <p className="text-sm text-muted-foreground">
-                  {dict.discovery.clickOnMapToSelect}
-                </p>
-              </div>
-            </CardContent>
           </Card>
-        )}
+        </div>
+      )}
 
-        {/* Quick Provider List */}
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-lg">
-              {dict.discovery.providersNearby}
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {providers.slice(0, 5).map((provider) => (
+      {/* Providers Carousel (Bottom Anchored) */}
+      {!selectedProvider && providers.length > 0 && (
+        <div className="absolute bottom-4 left-0 right-0 z-40 pointer-events-none">
+          <div className="flex overflow-x-auto snap-x snap-mandatory px-4 pb-2 gap-4 no-scrollbar pointer-events-auto">
+            {providers.map((provider) => (
               <div
                 key={provider.id}
-                className={`p-3 rounded-lg border cursor-pointer transition-colors hover:bg-muted/50 ${selectedProvider?.id === provider.id ? "bg-muted" : ""}`}
+                className="snap-center shrink-0 w-[280px] bg-background rounded-xl shadow-lg border p-4 cursor-pointer hover:bg-muted/30 transition-colors"
                 onClick={() => handleProviderClick(provider)}
               >
-                <div className="flex items-start justify-between mb-2">
-                  <div>
-                    <h4 className="font-medium text-sm">{provider.name}</h4>
-                    <p className="text-xs text-muted-foreground">{provider.qualification}</p>
-                  </div>
-                  <Badge className={getProviderTypeColor(provider.providerType)} variant="secondary">
+                <div className="flex justify-between items-start mb-1">
+                  <h4 className="font-bold text-sm line-clamp-1">{provider.name}</h4>
+                  <Badge className={`text-[10px] h-5 px-1.5 ${getProviderTypeColor(provider.providerType)}`} variant="secondary">
                     {provider.providerType === "VET_DOCTOR" ? "VET" : "PARA"}
                   </Badge>
                 </div>
-
-                <div className="flex items-center justify-between text-xs text-muted-foreground">
-                  <span className="flex items-center gap-1">
-                    <MapPin className="h-3 w-3" />
-                    {getDistanceText(provider.distanceMeters)}
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <span className="font-bold">₹</span>
-                    {provider.baseVisitFeePaise / 100}
-                  </span>
+                <p className="text-xs text-muted-foreground mb-3 line-clamp-1">{provider.qualification}</p>
+                <div className="flex items-end justify-between mt-auto">
+                  <div>
+                    <span className="text-2xl font-bold tracking-tight">
+                      {provider.distanceMeters !== null ? (
+                        provider.distanceMeters < 1000 
+                          ? provider.distanceMeters 
+                          : Math.round(provider.distanceMeters / 100) / 10
+                      ) : (
+                        "--"
+                      )}
+                    </span>
+                    <span className="text-xs text-muted-foreground ml-1">
+                      {provider.distanceMeters !== null ? (provider.distanceMeters < 1000 ? "m" : "km") : ""}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="h-2 w-2 rounded-full bg-green-500 animate-pulse"></span>
+                    <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">Available</span>
+                  </div>
                 </div>
               </div>
             ))}
-          </CardContent>
-        </Card>
-      </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
