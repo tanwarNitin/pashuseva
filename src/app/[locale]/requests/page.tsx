@@ -13,6 +13,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getFarmerRoutineBookings } from "@/actions/routine.actions";
 import RoutineClient from "./routine-client";
 import { PageShell } from "@/components/layout/page-shell";
+import { PushToggle } from "@/components/ui/push-toggle";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -42,8 +43,6 @@ function getRequestStatusBadge(status: string, dict: any) {
   const config = statusConfig[status] || { label: status, variant: "outline" };
   return <Badge variant={config.variant}>{config.label}</Badge>;
 }
-
-import { PushToggle } from "@/components/ui/push-toggle";
 
 export default async function RequestsPage({ params }: PageProps) {
   const { locale: localeParam } = await params;
