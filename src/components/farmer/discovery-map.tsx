@@ -1,10 +1,11 @@
 
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTranslation } from "@/i18n/client";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import { Icon, LatLng } from "leaflet";
+import type { Map as LeafletMap, Marker as LeafletMarker } from "leaflet";
+import { Icon } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -48,6 +49,9 @@ export default function DiscoveryMap({
     maxDistance: 50000,
   });
 
+  const mapRef = useRef<LeafletMap | null>(null);
+  const markerRefs = useRef<Record<string, LeafletMarker | null>>({});
+
   // Filter providers based on filters
   const filteredProviders = providers.filter((provider) => {
     if (filters.providerType && provider.providerType !== filters.providerType) {
@@ -62,6 +66,20 @@ export default function DiscoveryMap({
   const handleProviderClick = (provider: ProviderWithDistance) => {
     setSelectedProvider(provider);
     onProviderSelect?.(provider);
+
+    if (provider.latitude != null && provider.longitude != null && provider.latitude !== "" && provider.longitude !== "") {
+      const lat = parseFloat(provider.latitude);
+      const lng = parseFloat(provider.longitude);
+      if (!isNaN(lat) && !isNaN(lng)) {
+        if (mapRef.current) {
+          mapRef.current.flyTo([lat, lng], 13, { duration: 0.5 });
+        }
+        const marker = markerRefs.current[provider.id];
+        if (marker) {
+          marker.openPopup();
+        }
+      }
+    }
   };
 
   const handleContactProvider = (provider: ProviderWithDistance, e: React.MouseEvent) => {
@@ -108,6 +126,7 @@ export default function DiscoveryMap({
       <div className="lg:col-span-2 relative z-0 isolate">
         <div className="h-full rounded-lg border bg-card">
           <MapContainer
+            ref={mapRef}
             center={[centerLat, centerLng]}
             zoom={farmerLocation ? 13 : 11}
             style={{ height: "600px", width: "100%" }}
@@ -134,6 +153,13 @@ export default function DiscoveryMap({
             {providers.map((provider) => (
               <Marker
                 key={provider.id}
+                ref={(node) => {
+                  if (node) {
+                    markerRefs.current[provider.id] = node;
+                  } else {
+                    delete markerRefs.current[provider.id];
+                  }
+                }}
                 position={[parseFloat(provider.latitude), parseFloat(provider.longitude)]}
                 icon={markerIcon}
                 eventHandlers={{
