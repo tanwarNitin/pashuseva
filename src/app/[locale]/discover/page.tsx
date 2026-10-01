@@ -26,25 +26,25 @@ export default async function DiscoverPage({ params }: PageProps) {
   const farmerId = session?.user?.id || null;
 
   return (
-    <main className="min-h-screen bg-background">
-      {/* Hero Section */}
-      <div className="relative bg-primary overflow-hidden border-b border-border">
-        {/* Decorative background shapes */}
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-black/10 rounded-full blur-2xl translate-y-1/3 -translate-x-1/4"></div>
-        
-        <div className="container mx-auto px-4 py-16 md:py-24 relative z-10 flex flex-col items-center text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-primary-foreground tracking-tight mb-6 max-w-3xl">
-            {dict.discovery.title}
-          </h1>
-          <p className="text-xl md:text-2xl text-primary-foreground/90 max-w-2xl font-medium">
-            {dict.discovery.subtitle}
-          </p>
+    <main className="min-h-screen bg-background flex flex-col">
+      {/* Compact Branded Strip */}
+      <div className="bg-primary border-b border-border py-4 relative overflow-hidden shrink-0">
+        <div className="container mx-auto px-4 relative z-10 flex flex-col md:flex-row items-center justify-between gap-2">
+          <div className="text-center md:text-left">
+            <h1 className="text-xl md:text-2xl font-bold text-primary-foreground tracking-tight">
+              {dict.discovery.title}
+            </h1>
+            <p className="text-sm md:text-base text-primary-foreground/90 font-medium">
+              {dict.discovery.subtitle}
+            </p>
+          </div>
         </div>
+        {/* Subtle decorative element */}
+        <div className="absolute right-0 top-0 w-32 h-full bg-white/10 skew-x-12 translate-x-4"></div>
       </div>
 
-      {/* Main Content Area */}
-      <div className="container mx-auto px-4 py-8 -mt-8 relative z-20">
+      {/* Main Content Area - Fill remaining height */}
+      <div className="container mx-auto px-4 py-4 md:py-6 flex-1 flex flex-col">
         <DiscoveryClient farmerId={farmerId} locale={locale} />
       </div>
     </main>

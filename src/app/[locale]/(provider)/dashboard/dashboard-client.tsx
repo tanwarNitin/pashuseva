@@ -738,8 +738,12 @@ export default function ProviderDashboardClient({
         </div>
       </div>
 
-      {/* Section 1: Active Assigned Requests */}
-      <div className="space-y-4">
+      {/* Dashboard Main Grid - Distinctive Split Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 pt-2">
+        {/* Left Column: Active Assignments */}
+        <div className="lg:col-span-7 space-y-6">
+          {/* Section 1: Active Assigned Requests */}
+          <div className="space-y-4">
         <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
           <span>{dict.provider.requestsFeed.activeRequests}</span>
           <Badge variant="secondary" className="font-semibold text-xs">
@@ -878,8 +882,12 @@ export default function ProviderDashboardClient({
         )}
       </div>
 
-      {/* Section 2: Incoming Requests Feed */}
-      <div className="space-y-4 pt-4">
+        </div>
+
+        {/* Right Column: Feeds (Incoming & Routine) */}
+        <div className="lg:col-span-5 space-y-6">
+          {/* Section 2: Incoming Requests Feed */}
+          <div className="space-y-4">
         <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
           <span>{dict.provider.requestsFeed.incomingFeed}</span>
           <Badge variant="secondary" className="font-semibold text-xs">
@@ -1091,7 +1099,9 @@ export default function ProviderDashboardClient({
               ))}
           </div>
         )}
+        </div>
       </div>
     </div>
+  </div>
   );
 }
