@@ -34,10 +34,7 @@ export default async function ProviderDashboardPage({ params }: PageProps) {
   }
 
   return (
-    <PageShell
-      title={dict.provider.dashboard}
-      subtitle={dict.provider.incomingRequests}
-    >
+    <PageShell>
       <ProviderDashboardClient dict={dict} locale={locale} />
     </PageShell>
   );

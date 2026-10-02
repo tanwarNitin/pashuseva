@@ -27,6 +27,8 @@ export const hi: Dictionary = {
     viewAll: "सभी देखें",
     notes: "टिप्पणियाँ",
     update: "अपडेट करें",
+    updated: "अपडेट किया गया",
+    kmAway: "किमी दूर",
   },
 
   auth: {
@@ -378,6 +380,7 @@ export const hi: Dictionary = {
       dutyHelpOn: "आप ड्यूटी पर हैं और आपातकालीन SOS व सामान्य अनुरोध प्राप्त करने के पात्र हैं।",
       locationAccuracy: "सटीकता",
       locationFreshness: "स्थान पुष्ट",
+      coordinatesUnconfirmed: "निर्देशांक अपुष्ट",
     },
     requestsFeed: {
       title: "आने वाले अनुरोध",
@@ -399,12 +402,17 @@ export const hi: Dictionary = {
       incomingFeed: "लाइव आपातकालीन व सामान्य फ़ीड",
       noIncoming: "अभी कोई अनुरोध नहीं है। अनुरोध बनाए जाने पर वे यहाँ लाइव दिखाई देंगे।",
       noActive: "वर्तमान में कोई सक्रिय कार्य नहीं है।",
+      noCompleted: "अभी तक कोई पूर्ण कार्य नहीं।",
       liveUpdatesNotice: "डैशबोर्ड खुला रहने पर अनुरोध अपने आप अपडेट होते हैं।",
       acceptConflict: "यह अनुरोध किसी अन्य प्रदाता द्वारा पहले ही स्वीकार किया जा चुका है या रद्द हो गया है।",
       markDone: "दौरा पूरा चिह्नित करें",
       waitingConfirmation: "किसान की पुष्टि की प्रतीक्षा है",
       markedDoneWaitConfirm: "दौरा पूरा चिह्नित किया गया। किसान की पुष्टि की प्रतीक्षा है।",
+      now: "अभी",
+      today: "आज",
+      done: "पूर्ण",
     },
+    profileAndFees: "प्रोफ़ाइल और शुल्क",
     onboarding: {
       title: "प्रदाता ऑनबोर्डिंग",
       subtitle: "सेवा अनुरोध प्राप्त करना शुरू करने के लिए अपनी प्रोफ़ाइल पूरी करें",

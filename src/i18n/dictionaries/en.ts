@@ -25,6 +25,8 @@ export const en = {
     viewAll: "View All",
     notes: "Notes",
     update: "Update",
+    updated: "Updated",
+    kmAway: "km away",
   },
 
   auth: {
@@ -375,6 +377,7 @@ export const en = {
       dutyHelpOn: "You are on duty and eligible to receive emergency SOS and routine visits.",
       locationAccuracy: "Accuracy",
       locationFreshness: "Location confirmed",
+      coordinatesUnconfirmed: "Coordinates unconfirmed",
     },
     requestsFeed: {
       title: "Incoming Requests",
@@ -396,12 +399,17 @@ export const en = {
       incomingFeed: "Live Emergency & Routine Feed",
       noIncoming: "No incoming requests right now. They will appear here live when created.",
       noActive: "No active assignments right now.",
+      noCompleted: "No completed tasks yet.",
       liveUpdatesNotice: "Requests update automatically while this dashboard is open.",
       acceptConflict: "This request was already accepted by another provider or cancelled.",
       markDone: "Mark Visit Done",
       waitingConfirmation: "Waiting for Farmer Confirmation",
       markedDoneWaitConfirm: "Visit marked as done. Waiting for farmer confirmation.",
+      now: "NOW",
+      today: "TODAY",
+      done: "DONE",
     },
+    profileAndFees: "Profile & Fees",
     onboarding: {
       title: "Provider Onboarding",
       subtitle: "Complete your profile to start receiving service requests",
