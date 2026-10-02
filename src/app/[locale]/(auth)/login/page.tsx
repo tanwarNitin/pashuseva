@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { LoginForm } from "@/components/auth/login-form";
 import { getDictionary } from "@/i18n/server";
 import { getLocaleOrDefault } from "@/i18n/config";
+import Image from "next/image";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -27,9 +28,14 @@ export default async function LoginPage({ params }: PageProps) {
       {/* Left/Top Branding Panel */}
       <div className="w-full md:w-1/2 bg-emerald-900 p-6 md:p-12 flex flex-col justify-between gap-4 md:gap-0 shrink-0">
         <div>
-          <h1 className="text-3xl md:text-5xl font-bold text-white mb-2 md:mb-6">
-            {dict.common.appName}
-          </h1>
+          <div className="flex items-center gap-3 mb-2 md:mb-6">
+            <div className="bg-white p-1.5 rounded-xl shadow-sm inline-flex">
+              <Image src="/images/icon-192.png" alt="Logo" width={48} height={48} className="rounded-lg" />
+            </div>
+            <h1 className="text-3xl md:text-5xl font-bold text-white">
+              {dict.common.appName}
+            </h1>
+          </div>
           <p className="text-emerald-50 text-base md:text-2xl max-w-md font-medium leading-relaxed">
             {dict.auth.login.purpose}
           </p>

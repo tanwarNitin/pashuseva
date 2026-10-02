@@ -3,6 +3,7 @@
 import { useRouter, usePathname } from "next/navigation";
 import { useTranslation, useLocale } from "@/i18n/client";
 import Link from "next/link";
+import Image from "next/image";
 import { LanguageSwitcher } from "./language-switcher";
 import { Menu, X, Stethoscope, Calendar, Users, LogIn, LogOut, Shield } from "lucide-react";
 import { useState, useEffect } from "react";
@@ -86,7 +87,7 @@ export function Header({ user }: HeaderProps) {
             className="flex items-center gap-2 text-xl font-bold text-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 rounded"
             aria-label={dict.common.appName}
           >
-            <span className="text-2xl">🐄</span>
+            <Image src="/images/icon-192.png" alt="Logo" width={36} height={36} className="rounded-md shrink-0" />
             <span className="hidden sm:inline">{dict.common.appName}</span>
           </Link>
 
