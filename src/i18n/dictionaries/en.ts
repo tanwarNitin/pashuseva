@@ -33,6 +33,8 @@ export const en = {
     login: {
       title: "Login",
       subtitle: "Enter your phone and PIN to access your account",
+      purpose: "Veterinary care at your farm gate",
+      trust: "Verified veterinary providers • Available in Hindi & English",
       phoneLabel: "Phone Number",
       phonePlaceholder: "+91 XXXXX XXXXX",
       pinLabel: "4-Digit PIN",

@@ -35,6 +35,8 @@ export const hi: Dictionary = {
     login: {
       title: "लॉगिन",
       subtitle: "अपना फ़ोन नंबर और PIN दर्ज करके अपने खाते में प्रवेश करें",
+      purpose: "आपके खेत के द्वार पर पशु चिकित्सा देखभाल",
+      trust: "सत्यापित पशु चिकित्सा प्रदाता • हिंदी और अंग्रेजी में उपलब्ध",
       phoneLabel: "फ़ोन नंबर",
       phonePlaceholder: "+91 XXXXX XXXXX",
       pinLabel: "4-अंकित PIN",

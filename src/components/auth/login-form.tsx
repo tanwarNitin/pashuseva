@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useActionState } from "react";
 import { loginAction } from "@/actions/auth.actions";
@@ -46,6 +46,46 @@ export function LoginForm({ locale, dict }: LoginFormProps) {
   const callbackUrl = searchParams.get("callbackUrl") || `/${locale}/discover`;
 
   const [showPin, setShowPin] = useState(false);
+  const [pinValues, setPinValues] = useState(["", "", "", ""]);
+  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+
+  const handlePinChange = (index: number, value: string) => {
+    if (!/^\d*$/.test(value)) return;
+    const digit = value.slice(-1);
+    const newValues = [...pinValues];
+    newValues[index] = digit;
+    setPinValues(newValues);
+
+    if (digit && index < 3) {
+      inputRefs.current[index + 1]?.focus();
+    }
+  };
+
+  const handlePinKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Backspace" && !pinValues[index] && index > 0) {
+      inputRefs.current[index - 1]?.focus();
+    }
+  };
+
+  const handlePinPaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const pasted = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, 4);
+    if (!pasted) return;
+    
+    const newValues = [...pinValues];
+    for (let i = 0; i < pasted.length; i++) {
+      newValues[i] = pasted[i];
+    }
+    setPinValues(newValues);
+    
+    const focusIndex = Math.min(pasted.length, 3);
+    if (focusIndex < 4) {
+      inputRefs.current[focusIndex]?.focus();
+    } else {
+      inputRefs.current[3]?.focus();
+    }
+  };
+
   const [formState, formAction, isPending] = useActionState<FormState, FormData>(
     async (prevState: FormState, formData: FormData): Promise<FormState> => {
       const phone = String(formData.get("phone") ?? "");
@@ -108,19 +148,24 @@ export function LoginForm({ locale, dict }: LoginFormProps) {
         <Label htmlFor="phone" className="text-sm font-medium text-gray-700">
           {dict.login.phoneLabel}
         </Label>
-        <Input
-          id="phone"
-          name="phone"
-          type="tel"
-          placeholder={dict.login.phonePlaceholder}
-          autoComplete="tel"
-          inputMode="numeric"
-          className={formState.fieldErrors?.phone ? "border-red-500 focus:border-red-500 focus:ring-red-500" : ""}
-          aria-invalid={!!formState.fieldErrors?.phone}
-          aria-describedby={formState.fieldErrors?.phone ? "phone-error" : undefined}
-          disabled={isPending}
-          required
-        />
+        <div className={`flex rounded-md border bg-transparent shadow-sm focus-within:ring-1 focus-within:ring-primary focus-within:border-primary ${formState.fieldErrors?.phone ? "border-red-500 focus-within:border-red-500 focus-within:ring-red-500" : "border-input"}`}>
+          <div className="flex items-center pl-3 pr-2 text-gray-500 sm:text-sm border-r border-input bg-gray-50 rounded-l-md">
+            +91
+          </div>
+          <Input
+            id="phone"
+            name="phone"
+            type="tel"
+            placeholder="XXXXX XXXXX"
+            autoComplete="tel"
+            inputMode="numeric"
+            className="border-0 focus-visible:ring-0 shadow-none rounded-l-none"
+            aria-invalid={!!formState.fieldErrors?.phone}
+            aria-describedby={formState.fieldErrors?.phone ? "phone-error" : undefined}
+            disabled={isPending}
+            required
+          />
+        </div>
         {formState.fieldErrors?.phone && (
           <p id="phone-error" className="text-sm text-red-600" role="alert">
             {formState.fieldErrors.phone}
@@ -128,35 +173,43 @@ export function LoginForm({ locale, dict }: LoginFormProps) {
         )}
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="pin" className="text-sm font-medium text-gray-700">
-          {dict.login.pinLabel}
-        </Label>
-        <div className="relative">
-          <Input
-            id="pin"
-            name="pin"
-            type={showPin ? "text" : "password"}
-            placeholder={dict.login.pinPlaceholder}
-            autoComplete="one-time-code"
-            inputMode="numeric"
-            maxLength={4}
-            className={formState.fieldErrors?.pin ? "border-red-500 focus:border-red-500 focus:ring-red-500 pr-12" : "pr-12"}
-            aria-invalid={!!formState.fieldErrors?.pin}
-            aria-describedby={formState.fieldErrors?.pin ? "pin-error" : undefined}
-            disabled={isPending}
-            required
-          />
+      <div className="space-y-3">
+        <div className="flex justify-between items-center">
+          <Label htmlFor="pin-0" className="text-sm font-medium text-gray-700">
+            {dict.login.pinLabel}
+          </Label>
           <button
             type="button"
             onClick={() => setShowPin(!showPin)}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500 rounded p-1"
-            aria-label={showPin ? dict.login.hidePin : dict.login.showPin}
-            aria-pressed={showPin}
+            className="text-xs font-medium text-emerald-600 hover:text-emerald-700 flex items-center gap-1"
             disabled={isPending}
           >
-            {showPin ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+            {showPin ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+            {showPin ? dict.login.hidePin : dict.login.showPin}
           </button>
+        </div>
+        <div className="flex gap-3 justify-between">
+          <input type="hidden" name="pin" value={pinValues.join("")} />
+          {[0, 1, 2, 3].map((index) => (
+            <Input
+              key={index}
+              id={`pin-${index}`}
+              ref={(el) => {
+                inputRefs.current[index] = el;
+              }}
+              type={showPin ? "text" : "password"}
+              inputMode="numeric"
+              maxLength={1}
+              value={pinValues[index]}
+              onChange={(e) => handlePinChange(index, e.target.value)}
+              onKeyDown={(e) => handlePinKeyDown(index, e)}
+              onPaste={handlePinPaste}
+              className={`w-14 h-14 text-center text-xl font-bold ${formState.fieldErrors?.pin ? "border-red-500 focus-visible:ring-red-500" : ""}`}
+              disabled={isPending}
+              aria-invalid={!!formState.fieldErrors?.pin}
+              required={index === 0}
+            />
+          ))}
         </div>
         {formState.fieldErrors?.pin && (
           <p id="pin-error" className="text-sm text-red-600" role="alert">
