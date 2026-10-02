@@ -24,7 +24,9 @@ export async function createRoutineBookingAction(
 ): Promise<ActionState<{ id: string }>> {
   try {
     const session = await requireSession();
-    await requireRole("FARMER");
+    if (session.user.role !== "FARMER") {
+      return { ok: false, code: "FORBIDDEN", messageKey: "errors.FORBIDDEN" };
+    }
 
     const data = {
       providerId: formData.get("providerId") as string,

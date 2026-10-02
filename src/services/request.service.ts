@@ -2,7 +2,7 @@
 import { db } from "@/db";
 import { serviceRequests, serviceRequestRecipients, providerProfiles, users, animals, serviceRequestEvents } from "@/db/schema";
 import { eq, and, ne, sql, desc } from "drizzle-orm";
-import { ConflictError, AuthenticationError, ValidationError } from "@/lib/errors";
+import { ConflictError, AuthenticationError, AuthorizationError, ValidationError } from "@/lib/errors";
 import { checkApiRateLimit, resetRateLimit } from "@/lib/rate-limit";
 import { calculateFee, type FeeBreakdown } from "@/lib/fees";
 import { discoverNearbyProviders } from "@/services/discovery.service";
@@ -64,7 +64,7 @@ export async function createServiceRequest(
 
   // Verify farmer exists and is active
   const [farmer] = await db
-    .select({ id: users.id, status: users.status })
+    .select({ id: users.id, status: users.status, role: users.role })
     .from(users)
     .where(eq(users.id, input.farmerId))
     .limit(1);
@@ -75,6 +75,10 @@ export async function createServiceRequest(
 
   if (farmer.status !== "ACTIVE") {
     throw new ValidationError("Farmer account is not active");
+  }
+
+  if (farmer.role !== "FARMER") {
+    throw new AuthorizationError("Only farmers can create service requests");
   }
 
   // Rate limit the request

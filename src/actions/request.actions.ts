@@ -68,8 +68,11 @@ export async function createRequestAction(
 
     // Verify the requesting user is the authenticated farmer
     const session = await requireSession();
-    if (session.user.id !== input.farmerId || session.user.role !== "FARMER") {
+    if (session.user.id !== input.farmerId) {
       return error("UNAUTHENTICATED", "errors.UNAUTHENTICATED");
+    }
+    if (session.user.role !== "FARMER") {
+      return error("FORBIDDEN", "errors.FORBIDDEN");
     }
 
     // Create the service request

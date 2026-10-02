@@ -29,4 +29,5 @@ export type DiscoveryFilters = {
   maxDistanceMeters?: number;
   providerType?: "VET_DOCTOR" | "PARAVET_WORKER";
   searchQuery?: string;
+  excludeUserId?: string;
 };

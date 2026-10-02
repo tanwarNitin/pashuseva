@@ -51,7 +51,6 @@ export function Header({ user }: HeaderProps) {
     if (currentUser?.role === "VET_DOCTOR" || currentUser?.role === "PARAVET_WORKER") {
       return [
         { href: `/${locale}/dashboard`, icon: Calendar, label: dict.nav.dashboard },
-        { href: `/${locale}/discover`, icon: Stethoscope, label: dict.nav.discover },
       ];
     }
     if (currentUser?.role === "ADMIN") {
@@ -79,7 +78,11 @@ export function Header({ user }: HeaderProps) {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link
-            href={`/${locale}/discover`}
+            href={
+              currentUser?.role === "VET_DOCTOR" || currentUser?.role === "PARAVET_WORKER"
+                ? `/${locale}/dashboard`
+                : `/${locale}/discover`
+            }
             className="flex items-center gap-2 text-xl font-bold text-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 rounded"
             aria-label={dict.common.appName}
           >

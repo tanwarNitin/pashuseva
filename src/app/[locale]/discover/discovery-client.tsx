@@ -79,7 +79,11 @@ export default function DiscoveryClient({
         if (result.ok) {
           setState((prev) => ({
             ...prev,
-            providers: result.data.providers as any[],
+            providers: farmerId
+              ? (result.data.providers as any[]).filter(
+                  (p) => p.userId !== farmerId && p.id !== farmerId
+                )
+              : (result.data.providers as any[]),
             isLoading: false,
             error: null,
           }));

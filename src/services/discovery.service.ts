@@ -1,7 +1,7 @@
 import "server-only";
 import { db } from "@/db";
 import { users, providerProfiles } from "@/db/schema";
-import { eq, and, or, sql, ilike } from "drizzle-orm";
+import { eq, and, or, sql, ilike, ne } from "drizzle-orm";
 import { serverEnv } from "@/lib/env";
 import { type Coordinates } from "@/lib/geo";
 import { calculateFee } from "@/lib/fees";
@@ -101,6 +101,10 @@ export async function discoverNearbyProviders(
         // Has location
         sql`${providerProfiles.latitude} IS NOT NULL`,
         sql`${providerProfiles.longitude} IS NOT NULL`,
+        // Exclude current provider's own profile
+        filters.excludeUserId
+          ? ne(providerProfiles.userId, filters.excludeUserId)
+          : undefined,
         // Provider type filter
         providerType ? eq(users.role, providerType) : undefined,
         // Text search filter

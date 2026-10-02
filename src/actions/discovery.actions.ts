@@ -62,6 +62,7 @@ export async function discoverProvidersAction(
         maxDistanceMeters: input.maxDistanceMeters,
         providerType: input.providerType,
         searchQuery: input.searchQuery,
+        excludeUserId: session?.user?.id,
       }
     );
 

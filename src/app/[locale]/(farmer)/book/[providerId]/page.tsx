@@ -24,7 +24,7 @@ export default async function BookRoutinePage({ params }: PageProps) {
   }
   
   if (session.user.role !== "FARMER") {
-    redirect(`/${resolvedParams.locale}/discover`);
+    redirect(`/${resolvedParams.locale}/dashboard`);
   }
 
   // Fetch provider info
