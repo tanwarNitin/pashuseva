@@ -64,14 +64,14 @@ export function VaccinationReminders({ reminders, locale, dict }: VaccinationRem
               </div>
               <div>
                 <div className="flex flex-wrap items-center gap-2 mb-1">
-                  <span className="font-semibold text-foreground">
+                  <span className="font-medium text-foreground">
                     {reminder.animalName || dict.cattle.unnamed} {reminder.tagId ? `(${reminder.tagId})` : ""}
                   </span>
-                  <Badge variant={reminder.isOverdue ? "destructive" : "secondary"} className={!reminder.isOverdue ? "bg-orange-100 text-orange-800 hover:bg-orange-100" : ""}>
-                    {reminder.isOverdue ? dict.cattle.overdue : dict.cattle.dueSoon}
+                  <Badge variant={reminder.isOverdue ? "destructive" : "secondary"} className={!reminder.isOverdue ? "bg-orange-100 text-orange-800 hover:bg-orange-100 uppercase tracking-kicker text-[10px] font-medium" : "uppercase tracking-kicker text-[10px] font-medium"}>
+                    {reminder.isOverdue ? `🚨 ${dict.cattle.overdue}` : `⏳ ${dict.cattle.dueSoon}`}
                   </Badge>
                 </div>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-base text-foreground">
                   <span className="font-medium text-foreground">{reminder.vaccineName}</span> • {dict.cattle.vaccineDueOn}: {new Date(reminder.nextDueOn).toLocaleDateString(locale)}
                 </p>
               </div>

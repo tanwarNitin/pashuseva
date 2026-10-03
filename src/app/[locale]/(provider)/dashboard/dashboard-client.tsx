@@ -112,8 +112,8 @@ export function TrustBadge({
   const isVet = role === "VET_DOCTOR";
   if (verificationStatus === "VERIFIED") {
     return (
-      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-        <Shield className="w-3.5 h-3.5 text-emerald-600" />
+      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-primary-50 text-primary-700 border border-primary-200">
+        <Shield className="w-3.5 h-3.5 text-primary-600" />
         {isVet
           ? `${dict.provider.trustBadge.verifiedVet} • ${registrationAuthority || "VCI"}`
           : `${dict.provider.trustBadge.verifiedParavet} • ${registrationAuthority || "State Board"}`}
@@ -534,7 +534,7 @@ export default function ProviderDashboardClient({
     return (
       <div className="flex flex-col items-center justify-center min-h-[350px] gap-3">
         <Loader2 className="w-8 h-8 animate-spin text-primary-600" />
-        <p className="text-sm text-gray-500">{dict.common.loading}</p>
+        <p className="text-base text-foreground">{dict.common.loading}</p>
       </div>
     );
   }
@@ -562,24 +562,24 @@ export default function ProviderDashboardClient({
       )}
 
       {actionSuccess && (
-        <Alert className="border-emerald-200 bg-emerald-50 text-emerald-800">
-          <Check className="h-4 w-4 text-emerald-600" />
+        <Alert className="border-primary-200 bg-primary-50 text-primary-800">
+          <Check className="h-4 w-4 text-primary-600" />
           <AlertDescription>{actionSuccess}</AlertDescription>
         </Alert>
       )}
 
       {/* Full-width DUTY HERO BAND */}
-      <div className={`p-4 md:p-6 rounded-xl border flex flex-col md:flex-row items-center gap-4 md:gap-6 shadow-sm transition-colors ${isOnDuty && !leaseExpired ? 'bg-emerald-900 text-white border-emerald-900' : 'bg-gray-100 text-gray-900 border-gray-200'}`}>
+      <div className={`p-4 md:p-6 rounded-xl border flex flex-col md:flex-row items-center gap-4 md:gap-6 shadow-sm transition-colors ${isOnDuty && !leaseExpired ? 'bg-primary-900 text-white border-primary-900' : 'bg-gray-100 text-gray-900 border-gray-200'}`}>
         {/* Left: Identity */}
         <div className="flex-1 flex items-center gap-3 w-full">
           <div>
             <div className="flex items-center gap-2">
-              <h2 className="text-lg md:text-xl font-bold">{profile?.name}</h2>
+              <h2 className="text-lg md:text-xl font-medium">{profile?.name}</h2>
               {isVerified && (
-                <Shield className={`w-4 h-4 ${isOnDuty && !leaseExpired ? 'text-emerald-400' : 'text-emerald-600'}`} />
+                <Shield className={`w-4 h-4 ${isOnDuty && !leaseExpired ? 'text-primary-400' : 'text-primary-600'}`} />
               )}
             </div>
-            <p className={`text-xs md:text-sm mt-0.5 ${isOnDuty && !leaseExpired ? 'text-emerald-100/80' : 'text-gray-500'}`}>
+            <p className={`text-xs md:text-sm mt-0.5 ${isOnDuty && !leaseExpired ? 'text-primary-100/80' : 'text-gray-500'}`}>
               {profile?.qualification} • {profile?.role ? dict.roles[profile.role as keyof typeof dict.roles] || profile.role : ""}
             </p>
           </div>
@@ -587,15 +587,20 @@ export default function ProviderDashboardClient({
 
         {/* Middle: Duty Lease & Location */}
         <div className="flex-1 flex flex-col items-center md:items-start w-full text-center md:text-left gap-1.5">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-2 text-sm font-semibold">
+          <div className="flex flex-col items-center md:items-start gap-1">
             {isOnDuty ? (
               leaseExpired ? (
-                <span className={isOnDuty && !leaseExpired ? 'text-emerald-200' : 'text-gray-600'}>{dict.provider.dutyCard.expired}</span>
+                <span className={`text-2xl font-bold tracking-hero ${isOnDuty && !leaseExpired ? 'text-primary-200' : 'text-gray-600'}`}>{dict.provider.dutyCard.expired}</span>
               ) : (
-                <span>{dict.provider.dutyCard.expiresIn} {formatCountdown(profile?.dutyExpiresAt)}</span>
+                <div className="flex flex-col md:items-start items-center">
+                  <span className="text-xs text-primary-100/80 uppercase tracking-widest">{dict.provider.dutyCard.expiresIn}</span>
+                  <span className="text-4xl md:text-5xl font-black font-mono tracking-hero text-white tabular-nums leading-none mt-1">
+                    {formatCountdown(profile?.dutyExpiresAt)}
+                  </span>
+                </div>
               )
             ) : (
-              <span>{dict.provider.offDuty}</span>
+              <span className="text-4xl md:text-5xl font-black tracking-hero text-gray-900">{dict.provider.offDuty}</span>
             )}
             {isOnDuty && (
               <Button
@@ -603,7 +608,7 @@ export default function ProviderDashboardClient({
                 size="sm"
                 onClick={handleRenewDuty}
                 disabled={isDutyLoading || !isVerified}
-                className={`h-7 px-3 text-xs font-semibold ${isOnDuty && !leaseExpired ? 'bg-emerald-800 text-emerald-100 hover:bg-emerald-700 border-emerald-700 hover:text-white' : ''}`}
+                className={`h-7 px-3 text-xs font-semibold ${isOnDuty && !leaseExpired ? 'bg-primary-800 text-primary-100 hover:bg-primary-700 border-primary-700 hover:text-white' : ''}`}
               >
                 {dict.provider.dutyCard.renewDuty}
               </Button>
@@ -611,8 +616,8 @@ export default function ProviderDashboardClient({
           </div>
           
           <div className="flex items-center gap-2 text-xs">
-             <MapPin className={`w-3.5 h-3.5 ${isOnDuty && !leaseExpired ? 'text-emerald-300' : 'text-gray-400'}`} />
-             <span className={isOnDuty && !leaseExpired ? 'text-emerald-100/80' : 'text-gray-500'}>
+             <MapPin className={`w-3.5 h-3.5 ${isOnDuty && !leaseExpired ? 'text-primary-300' : 'text-gray-400'}`} />
+             <span className={isOnDuty && !leaseExpired ? 'text-primary-100/80' : 'text-gray-500'}>
                {profile?.locationConfirmedAt
                     ? formatRelativeTime(profile.locationConfirmedAt)
                     : dict.provider.dutyCard.coordinatesUnconfirmed}
@@ -620,7 +625,7 @@ export default function ProviderDashboardClient({
              <button
                onClick={handleUpdateLocation}
                disabled={isLocationLoading}
-               className={`font-semibold underline ${isOnDuty && !leaseExpired ? 'text-emerald-200 hover:text-white' : 'text-primary-600 hover:text-primary-700'}`}
+               className={`font-semibold underline ${isOnDuty && !leaseExpired ? 'text-primary-200 hover:text-white' : 'text-primary-600 hover:text-primary-700'}`}
              >
                {isLocationLoading ? <Loader2 className="w-3 h-3 animate-spin inline mr-1" /> : null}
                {dict.provider.dutyCard.refreshLocation}
@@ -630,11 +635,11 @@ export default function ProviderDashboardClient({
 
         {/* Right: Toggle & Push Notifications */}
         <div className="flex items-center gap-4 shrink-0 justify-between w-full md:w-auto">
-          <div className={`p-1 rounded flex items-center ${isOnDuty && !leaseExpired ? 'bg-emerald-800' : 'bg-white/50'}`}>
+          <div className={`p-1 rounded flex items-center ${isOnDuty && !leaseExpired ? 'bg-primary-800' : 'bg-white/50'}`}>
              <PushToggle />
           </div>
           <div className="flex items-center gap-3">
-             <span className={`text-sm font-bold ${isOnDuty && !leaseExpired ? 'text-emerald-50' : 'text-gray-600'}`}>
+             <span className={`text-sm font-bold ${isOnDuty && !leaseExpired ? 'text-primary-50' : 'text-gray-600'}`}>
                {isOnDuty && !leaseExpired ? dict.provider.onDuty : dict.provider.offDuty}
              </span>
              <Switch
@@ -642,7 +647,7 @@ export default function ProviderDashboardClient({
                 onCheckedChange={handleToggleDuty}
                 disabled={!isVerified || isDutyLoading}
                 aria-label={dict.provider.toggleDuty}
-                className={`data-[state=checked]:bg-emerald-400 h-[28px] w-[52px] [&_span[data-state=checked]]:translate-x-[24px]`}
+                className={`data-[state=checked]:bg-primary-400 h-[28px] w-[52px] [&_span[data-state=checked]]:translate-x-[24px]`}
                 style={{ transform: 'scale(1.2)' }}
              />
           </div>
@@ -655,16 +660,16 @@ export default function ProviderDashboardClient({
         {/* NOW: Active & Incoming */}
         <div className="space-y-4">
           <div className="flex items-center justify-between border-b pb-2">
-            <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+            <h2 className="flex items-center gap-2 text-base font-semibold text-kicker">
               <span>{dict.provider.requestsFeed.now || 'NOW'}</span>
-              <Badge variant="secondary" className="font-semibold text-xs">
+              <Badge variant="secondary" className="font-semibold text-base tabular-nums">
                 {incomingRequests.length + activeRequests.length}
               </Badge>
             </h2>
             <div className="flex items-center gap-2 text-xs text-gray-500">
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary-500"></span>
               </span>
               <span>{dict.common.updated} {lastFetched ? formatRelativeTime(lastFetched.toISOString()) : '...'}</span>
               <button
@@ -709,6 +714,7 @@ export default function ProviderDashboardClient({
                               : dict.provider.requestsFeed.routineBadge}
                           </Badge>
                           <Badge variant="outline" className="text-xs capitalize">
+                            {req.status === 'OPEN' ? '⏳ ' : req.status === 'COMPLETED' ? '✅ ' : req.status === 'ACCEPTED' ? '✅ ' : req.status === 'IN_PROGRESS' ? '✅ ' : ''}
                             {req.status.replace('_', ' ')}
                           </Badge>
                           {req.status === 'OPEN' && (
@@ -731,19 +737,19 @@ export default function ProviderDashboardClient({
 
                       <div className="text-right shrink-0">
                         {req.estimatedTotalPaise && (
-                          <p className="font-bold text-lg text-gray-900">
+                          <p className="font-semibold text-base text-gray-900 tracking-tight tabular-nums">
                             ₹{(req.estimatedTotalPaise / 100).toFixed(0)}
                           </p>
                         )}
                         {req.distanceMeters && (
-                          <p className="text-xs text-gray-500">
+                          <p className="text-xs text-gray-600 font-semibold tabular-nums">
                             {(req.distanceMeters / 1000).toFixed(1)} {dict.common.kmAway}
                           </p>
                         )}
                       </div>
                     </div>
 
-                    <p className="text-sm text-gray-700 bg-gray-50 p-3 rounded-md">
+                    <p className="text-base text-foreground bg-gray-50 p-3 rounded-md">
                       {req.conditionSummary}
                     </p>
 
@@ -753,7 +759,7 @@ export default function ProviderDashboardClient({
                           href={`tel:${req.farmerPhone}`}
                           className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-gray-300 text-xs font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
                         >
-                          <Phone className="w-3.5 h-3.5 text-emerald-600" />
+                          <Phone className="w-3.5 h-3.5 text-foreground" />
                           {dict.provider.requestsFeed.contactFarmer}
                         </a>
                         <a
@@ -762,7 +768,7 @@ export default function ProviderDashboardClient({
                           rel="noopener noreferrer"
                           className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-gray-300 text-xs font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
                         >
-                          <MessageCircle className="w-3.5 h-3.5 text-emerald-600" />
+                          <MessageCircle className="w-3.5 h-3.5 text-foreground" />
                           {dict.provider.requestsFeed.whatsAppFarmer}
                         </a>
                       </div>
@@ -815,7 +821,7 @@ export default function ProviderDashboardClient({
                             size="sm"
                             onClick={() => handleComplete(req.id)}
                             disabled={pendingActionId === req.id}
-                            className="bg-emerald-600 hover:bg-emerald-700 text-white"
+                            className="bg-primary-600 hover:bg-primary-700 text-white"
                           >
                             {pendingActionId === req.id ? (
                               <Loader2 className="w-3.5 h-3.5 animate-spin mr-1.5" />
@@ -843,9 +849,9 @@ export default function ProviderDashboardClient({
         {/* TODAY: Upcoming Routine Visits */}
         <div className="space-y-4">
           <div className="flex items-center justify-between border-b pb-2">
-            <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+            <h2 className="flex items-center gap-2 text-base font-semibold text-kicker">
               <span>{dict.provider.requestsFeed.today || 'TODAY'}</span>
-              <Badge variant="secondary" className="font-semibold text-xs">
+              <Badge variant="secondary" className="font-semibold text-base tabular-nums">
                 {routineBookings.filter(b => b.status === 'REQUESTED' || b.status === 'CONFIRMED').length}
               </Badge>
             </h2>
@@ -888,7 +894,7 @@ export default function ProviderDashboardClient({
                         </div>
                       </div>
 
-                      <p className="text-sm text-gray-700 bg-gray-50 p-3 rounded-md">
+                      <p className="text-base text-foreground bg-gray-50 p-3 rounded-md">
                         <span className="font-semibold">{dict.routine?.reason || 'Reason'}: </span>
                         {req.reason}
                       </p>
@@ -898,7 +904,7 @@ export default function ProviderDashboardClient({
                           href={`tel:${req.farmerPhone}`}
                           className="inline-flex mr-auto items-center gap-1.5 px-3 py-1.5 rounded-lg border border-gray-300 text-xs font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
                         >
-                          <Phone className="w-3.5 h-3.5 text-emerald-600" />
+                          <Phone className="w-3.5 h-3.5 text-foreground" />
                           {dict.provider.requestsFeed.contactFarmer || 'Call'}
                         </a>
 
@@ -933,7 +939,7 @@ export default function ProviderDashboardClient({
                             size="sm"
                             onClick={() => handleCompleteRoutine(req.id)}
                             disabled={pendingActionId === req.id}
-                            className="bg-emerald-600 hover:bg-emerald-700 text-white"
+                            className="bg-primary-600 hover:bg-primary-700 text-white"
                           >
                             {pendingActionId === req.id ? (
                               <Loader2 className="w-3.5 h-3.5 animate-spin mr-1.5" />
@@ -953,10 +959,10 @@ export default function ProviderDashboardClient({
 
         {/* DONE: Completed Today (Collapsed by default) */}
         <details className="group border rounded-lg bg-gray-50 [&_summary::-webkit-details-marker]:hidden">
-          <summary className="flex items-center justify-between p-4 font-bold text-gray-900 cursor-pointer list-none">
-            <div className="flex items-center gap-2">
+          <summary className="flex items-center justify-between p-4 cursor-pointer list-none">
+            <div className="flex items-center gap-2 text-base font-semibold text-kicker">
               <span>{dict.provider.requestsFeed.done || 'DONE'}</span>
-              <Badge variant="secondary" className="font-semibold text-xs">
+              <Badge variant="secondary" className="font-semibold text-base tabular-nums">
                  {requests.filter(r => r.status === 'COMPLETED').length + routineBookings.filter(b => b.status === 'COMPLETED').length}
               </Badge>
             </div>
@@ -967,7 +973,7 @@ export default function ProviderDashboardClient({
           
           <div className="p-4 pt-0 space-y-4">
              {requests.filter(r => r.status === 'COMPLETED').length === 0 && routineBookings.filter(b => b.status === 'COMPLETED').length === 0 ? (
-               <p className="text-sm text-gray-500 text-center py-4">{dict.provider.requestsFeed.noCompleted}</p>
+               <p className="text-base text-foreground text-center py-4">{dict.provider.requestsFeed.noCompleted}</p>
              ) : (
                <div className="grid grid-cols-1 gap-4">
                  {requests.filter(r => r.status === 'COMPLETED').map(req => (
@@ -977,7 +983,7 @@ export default function ProviderDashboardClient({
                             <span className="text-sm font-semibold text-gray-900">{req.farmerName}</span>
                             <span className="text-xs text-gray-500 ml-2 block sm:inline">{req.conditionSummary}</span>
                          </div>
-                         <Badge variant="outline" className="bg-gray-100">{dict.requestStatus.COMPLETED}</Badge>
+                         <Badge variant="outline" className="bg-gray-100">✅ {dict.requestStatus.COMPLETED}</Badge>
                       </CardContent>
                     </Card>
                  ))}
@@ -988,7 +994,7 @@ export default function ProviderDashboardClient({
                             <span className="text-sm font-semibold text-gray-900">{req.farmerName}</span>
                             <span className="text-xs text-gray-500 ml-2 block sm:inline">{dict.provider.requestsFeed.routineBadge}: {req.reason}</span>
                          </div>
-                         <Badge variant="outline" className="bg-gray-100">{dict.requestStatus.COMPLETED}</Badge>
+                         <Badge variant="outline" className="bg-gray-100">✅ {dict.requestStatus.COMPLETED}</Badge>
                       </CardContent>
                     </Card>
                  ))}

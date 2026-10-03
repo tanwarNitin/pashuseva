@@ -100,7 +100,7 @@ export function Header({ user }: HeaderProps) {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`flex items-center gap-1.5 text-sm font-medium transition-colors ${
+                  className={`flex items-center gap-1.5 text-sm font-medium tracking-tight transition-colors ${
                     isActive
                       ? "text-primary-600"
                       : "text-gray-600 hover:text-gray-900"
@@ -123,11 +123,11 @@ export function Header({ user }: HeaderProps) {
               {currentUser ? (
                 <div className="flex items-center gap-3">
                   <div className="flex flex-col text-right">
-                    <span className="text-sm font-semibold text-gray-900 leading-tight">
+                    <span className="text-sm font-medium text-gray-900 leading-tight tracking-tight">
                       {currentUser.name || currentUser.phone}
                     </span>
                     {currentUser.name && (
-                      <span className="text-xs text-gray-500 leading-tight">
+                      <span className="text-xs text-gray-500 leading-tight font-mono tabular-nums mt-0.5">
                         {currentUser.phone}
                       </span>
                     )}

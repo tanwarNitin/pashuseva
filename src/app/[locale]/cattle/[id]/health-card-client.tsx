@@ -177,11 +177,11 @@ export default function CattleHealthCardClient({ animal, isProvider }: HealthCar
 
   const getSpeciesLabel = (species: string) => {
     const labels: Record<string, string> = {
-      CATTLE: dict.cattle.species.cattle,
-      BUFFALO: dict.cattle.species.buffalo,
-      GOAT: dict.cattle.species.goat,
-      SHEEP: dict.cattle.species.sheep,
-      OTHER: dict.cattle.species.other,
+      CATTLE: `🐄 ${dict.cattle.species.cattle}`,
+      BUFFALO: `🐃 ${dict.cattle.species.buffalo}`,
+      GOAT: `🐐 ${dict.cattle.species.goat}`,
+      SHEEP: `🐑 ${dict.cattle.species.sheep}`,
+      OTHER: `🐾 ${dict.cattle.species.other}`,
     };
     return labels[species] || species;
   };
@@ -215,17 +215,17 @@ export default function CattleHealthCardClient({ animal, isProvider }: HealthCar
 
   const getSourceBadge = (source: string) => {
     return source === "FARMER_REPORTED"
-      ? <Badge variant="secondary">{dict.cattle.farmerReported}</Badge>
-      : <Badge className="bg-blue-100 text-blue-800">{dict.cattle.providerEntered}</Badge>;
+      ? <Badge variant="secondary" className="uppercase tracking-kicker text-[10px] font-medium">{dict.cattle.farmerReported}</Badge>
+      : <Badge className="bg-blue-100 text-blue-800 uppercase tracking-kicker text-[10px] font-medium">{dict.cattle.providerEntered}</Badge>;
   };
 
   const getRecordTypeBadge = (type: string) => {
     const badges: Record<string, React.ReactNode> = {
-      FARMER_NOTE: <Badge variant="secondary">{dict.cattle.farmerNote}</Badge>,
-      PROVIDER_VISIT: <Badge className="bg-green-100 text-green-800">{dict.cattle.providerVisit}</Badge>,
-      FOLLOW_UP: <Badge className="bg-purple-100 text-purple-800">{dict.cattle.followUp}</Badge>,
+      FARMER_NOTE: <Badge variant="secondary" className="uppercase tracking-kicker text-[10px] font-medium">{dict.cattle.farmerNote}</Badge>,
+      PROVIDER_VISIT: <Badge className="bg-primary-100 text-primary-800 uppercase tracking-kicker text-[10px] font-medium">{dict.cattle.providerVisit}</Badge>,
+      FOLLOW_UP: <Badge className="bg-purple-100 text-purple-800 uppercase tracking-kicker text-[10px] font-medium">{dict.cattle.followUp}</Badge>,
     };
-    return badges[type] || <Badge variant="secondary">{type}</Badge>;
+    return badges[type] || <Badge variant="secondary" className="uppercase tracking-kicker text-[10px] font-medium">{type}</Badge>;
   };
 
   const isOverdue = (dateStr: string | null) => {
@@ -379,15 +379,15 @@ export default function CattleHealthCardClient({ animal, isProvider }: HealthCar
   return (
     <div className="space-y-6">
       {/* Animal Header Card */}
-      <Card className="border-l-4 border-green-500">
+      <Card className="border-l-4 border-primary-500">
         <CardContent className="p-6">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div className="flex items-center gap-4">
-              <div className="p-4 rounded-full bg-green-100">
-                <Heart className="h-8 w-8 text-green-600" />
+              <div className="p-4 rounded-full bg-primary-100">
+                <Heart className="h-8 w-8 text-primary-600" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">{animal.name || dict.cattle.unnamed}</h1>
+                <h1 className="text-4xl font-black tracking-hero text-gray-900">{animal.name || dict.cattle.unnamed}</h1>
                 <div className="flex flex-wrap items-center gap-3 mt-1 text-sm text-gray-500">
                   <span className="flex items-center gap-1">
                     <Badge variant="outline">{getSpeciesLabel(animal.species)}</Badge>
@@ -400,7 +400,7 @@ export default function CattleHealthCardClient({ animal, isProvider }: HealthCar
                   </span>
                   {animal.tagId && (
                     <span className="flex items-center gap-1">
-                      <span className="text-xs font-mono bg-gray-100 px-2 py-1 rounded">{animal.tagId}</span>
+                      <span className="text-sm font-mono tabular-nums bg-gray-100 px-2 py-1 rounded">{animal.tagId}</span>
                     </span>
                   )}
                 </div>
@@ -488,7 +488,7 @@ export default function CattleHealthCardClient({ animal, isProvider }: HealthCar
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-3xl font-bold text-gray-900">{milkYields.length} {dict.cattle.entries}</p>
+                <p className="text-4xl font-black tabular-nums tracking-tight text-gray-900">{milkYields.length} <span className="text-base font-medium">{dict.cattle.entries}</span></p>
                 {milkYields.length > 0 && (
                   <p className="text-sm text-gray-500">
                     {dict.cattle.latest}: {parseFloat(milkYields[0].litersPerDay).toFixed(1)} L
@@ -503,12 +503,12 @@ export default function CattleHealthCardClient({ animal, isProvider }: HealthCar
             <Card>
               <CardHeader className="pb-2">
                 <CardTitle className="text-lg flex items-center gap-2">
-                  <Shield className="h-5 w-5 text-green-600" />
+                  <Shield className="h-5 w-5 text-primary-600" />
                   {dict.cattle.vaccinations}
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-3xl font-bold text-gray-900">{vaccinations.length} {dict.cattle.total}</p>
+                <p className="text-4xl font-black tabular-nums tracking-tight text-gray-900">{vaccinations.length} <span className="text-base font-medium">{dict.cattle.total}</span></p>
                 {vaccinations.length > 0 && (
                   <p className="text-sm text-gray-500">
                     {dict.cattle.nextDue}: {vaccinations.find(v => v.nextDueOn) ? format(new Date(vaccinations.find(v => v.nextDueOn)!.nextDueOn!), "dd MMM yyyy") : "—"}
@@ -528,7 +528,7 @@ export default function CattleHealthCardClient({ animal, isProvider }: HealthCar
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-3xl font-bold text-gray-900">{medicalRecords.length} {dict.cattle.entries}</p>
+                <p className="text-4xl font-black tabular-nums tracking-tight text-gray-900">{medicalRecords.length} <span className="text-base font-medium">{dict.cattle.entries}</span></p>
                 {medicalRecords.length > 0 && (
                   <p className="text-sm text-gray-500">
                     {dict.cattle.latest}: {format(new Date(medicalRecords[0].recordedOn), "dd MMM yyyy")}
@@ -554,7 +554,7 @@ export default function CattleHealthCardClient({ animal, isProvider }: HealthCar
                 <div>
                   <h4 className="font-medium mb-3">{dict.cattle.recentVaccinations}</h4>
                   {vaccinations.slice(0, 3).length === 0 ? (
-                    <p className="text-sm text-gray-500">{dict.cattle.noVaccinations}</p>
+                    <p className="text-base text-foreground">{dict.cattle.noVaccinations}</p>
                   ) : (
                     <ul className="space-y-2">
                       {vaccinations.slice(0, 3).map(v => (
@@ -569,13 +569,13 @@ export default function CattleHealthCardClient({ animal, isProvider }: HealthCar
                 <div>
                   <h4 className="font-medium mb-3">{dict.cattle.upcomingVaccinations}</h4>
                   {vaccinations.filter(v => v.nextDueOn && !isOverdue(v.nextDueOn)).slice(0, 3).length === 0 ? (
-                    <p className="text-sm text-gray-500">{dict.cattle.noUpcoming}</p>
+                    <p className="text-base text-foreground">{dict.cattle.noUpcoming}</p>
                   ) : (
                     <ul className="space-y-2">
                       {vaccinations.filter(v => v.nextDueOn && !isOverdue(v.nextDueOn)).slice(0, 3).map(v => (
                         <li key={v.id} className="flex items-center justify-between text-sm">
                           <span>{v.vaccineName}</span>
-                          <Badge className={`text-xs ${isOverdue(v.nextDueOn) ? "bg-red-100 text-red-800" : "bg-green-100 text-green-800"}`}>
+                          <Badge className={`text-xs ${isOverdue(v.nextDueOn) ? "bg-red-100 text-red-800" : "bg-primary-100 text-primary-800"}`}>
                             {format(new Date(v.nextDueOn!), "dd MMM yyyy")}
                           </Badge>
                         </li>
@@ -604,7 +604,7 @@ export default function CattleHealthCardClient({ animal, isProvider }: HealthCar
                 <div className="text-center">
                   <Droplet className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
                   <h3 className="font-medium mb-2">{dict.cattle.noMilkRecords}</h3>
-                  <p className="text-sm text-muted-foreground">{dict.cattle.addFirstMilkRecord}</p>
+                  <p className="text-base text-foreground">{dict.cattle.addFirstMilkRecord}</p>
                 </div>
               </CardContent>
             </Card>
@@ -657,7 +657,7 @@ export default function CattleHealthCardClient({ animal, isProvider }: HealthCar
                 <div className="text-center">
                   <Shield className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
                   <h3 className="font-medium mb-2">{dict.cattle.noVaccinations}</h3>
-                  <p className="text-sm text-muted-foreground">{dict.cattle.addFirstVaccination}</p>
+                  <p className="text-base text-foreground">{dict.cattle.addFirstVaccination}</p>
                 </div>
               </CardContent>
             </Card>
@@ -668,8 +668,8 @@ export default function CattleHealthCardClient({ animal, isProvider }: HealthCar
                   <CardContent className="p-4">
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                       <div className="flex items-center gap-4 flex-1">
-                        <div className="p-2 rounded-full bg-green-100">
-                          <Shield className="h-5 w-5 text-green-600" />
+                        <div className="p-2 rounded-full bg-primary-100">
+                          <Shield className="h-5 w-5 text-primary-600" />
                         </div>
                         <div>
                           <p className="font-medium">{entry.vaccineName}</p>
@@ -728,7 +728,7 @@ export default function CattleHealthCardClient({ animal, isProvider }: HealthCar
                 <div className="text-center">
                   <AlertTriangle className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
                   <h3 className="font-medium mb-2">{dict.cattle.noMedicalRecords}</h3>
-                  <p className="text-sm text-muted-foreground">{dict.cattle.addFirstMedicalRecord}</p>
+                  <p className="text-base text-foreground">{dict.cattle.addFirstMedicalRecord}</p>
                 </div>
               </CardContent>
             </Card>

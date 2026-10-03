@@ -145,11 +145,11 @@ export function LoginForm({ locale, dict }: LoginFormProps) {
       )}
 
       <div className="space-y-2">
-        <Label htmlFor="phone" className="text-sm font-medium text-gray-700">
+        <Label htmlFor="phone" className="text-sm font-normal text-gray-700">
           {dict.login.phoneLabel}
         </Label>
         <div className={`flex rounded-md border bg-transparent shadow-sm focus-within:ring-1 focus-within:ring-primary focus-within:border-primary ${formState.fieldErrors?.phone ? "border-red-500 focus-within:border-red-500 focus-within:ring-red-500" : "border-input"}`}>
-          <div className="flex items-center pl-3 pr-2 text-gray-500 sm:text-sm border-r border-input bg-gray-50 rounded-l-md">
+          <div className="flex items-center pl-3 pr-2 text-gray-600 sm:text-sm border-r border-input bg-gray-50 rounded-l-md tabular-nums font-mono">
             +91
           </div>
           <Input
@@ -159,7 +159,7 @@ export function LoginForm({ locale, dict }: LoginFormProps) {
             placeholder="XXXXX XXXXX"
             autoComplete="tel"
             inputMode="numeric"
-            className="border-0 focus-visible:ring-0 shadow-none rounded-l-none"
+            className="border-0 focus-visible:ring-0 shadow-none rounded-l-none tabular-nums font-mono text-lg"
             aria-invalid={!!formState.fieldErrors?.phone}
             aria-describedby={formState.fieldErrors?.phone ? "phone-error" : undefined}
             disabled={isPending}
@@ -175,13 +175,13 @@ export function LoginForm({ locale, dict }: LoginFormProps) {
 
       <div className="space-y-3">
         <div className="flex justify-between items-center">
-          <Label htmlFor="pin-0" className="text-sm font-medium text-gray-700">
+          <Label htmlFor="pin-0" className="text-sm font-normal text-gray-700">
             {dict.login.pinLabel}
           </Label>
           <button
             type="button"
             onClick={() => setShowPin(!showPin)}
-            className="text-xs font-medium text-emerald-600 hover:text-emerald-700 flex items-center gap-1"
+            className="text-xs font-medium text-primary-600 hover:text-primary-700 flex items-center gap-1"
             disabled={isPending}
           >
             {showPin ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
@@ -204,7 +204,7 @@ export function LoginForm({ locale, dict }: LoginFormProps) {
               onChange={(e) => handlePinChange(index, e.target.value)}
               onKeyDown={(e) => handlePinKeyDown(index, e)}
               onPaste={handlePinPaste}
-              className={`w-14 h-14 text-center text-xl font-bold ${formState.fieldErrors?.pin ? "border-red-500 focus-visible:ring-red-500" : ""}`}
+              className={`w-14 h-14 text-center text-2xl font-mono tabular-nums ${formState.fieldErrors?.pin ? "border-red-500 focus-visible:ring-red-500" : ""}`}
               disabled={isPending}
               aria-invalid={!!formState.fieldErrors?.pin}
               required={index === 0}

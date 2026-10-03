@@ -101,11 +101,11 @@ export default async function CattleListPage({ params }: PageProps) {
 
   const getSpeciesLabel = (species: string) => {
     const speciesMap: Record<string, string> = {
-      CATTLE: dict.cattle.species.cattle,
-      BUFFALO: dict.cattle.species.buffalo,
-      GOAT: dict.cattle.species.goat,
-      SHEEP: dict.cattle.species.sheep,
-      OTHER: dict.cattle.species.other,
+      CATTLE: `🐄 ${dict.cattle.species.cattle}`,
+      BUFFALO: `🐃 ${dict.cattle.species.buffalo}`,
+      GOAT: `🐐 ${dict.cattle.species.goat}`,
+      SHEEP: `🐑 ${dict.cattle.species.sheep}`,
+      OTHER: `🐾 ${dict.cattle.species.other}`,
     };
     return speciesMap[species] || species;
   };
@@ -140,7 +140,7 @@ export default async function CattleListPage({ params }: PageProps) {
               <div className="text-center">
                 <Users className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
                 <h3 className="font-medium mb-2">{dict.cattle.noAnimals || "No animals registered"}</h3>
-                <p className="text-sm text-muted-foreground mb-4">{dict.cattle.noAnimalsDesc || "Add your first animal to start tracking health records"}</p>
+                <p className="text-base text-foreground mb-4">{dict.cattle.noAnimalsDesc || "Add your first animal to start tracking health records"}</p>
                 <Link href={`/${locale}/cattle/add`}>
                   <Button variant="outline">{dict.cattle.addAnimal}</Button>
                 </Link>
@@ -154,12 +154,12 @@ export default async function CattleListPage({ params }: PageProps) {
                 <CardHeader>
                   <div className="flex justify-between items-start">
                     <div>
-                      <CardTitle className="text-lg">{animal.name || dict.cattle.unnamed || "Unnamed"}</CardTitle>
-                      <CardDescription>{dict.cattle.tagNumber}: {animal.tagId}</CardDescription>
+                      <CardTitle className="text-3xl font-black tracking-hero text-gray-900">{animal.name || dict.cattle.unnamed || "Unnamed"}</CardTitle>
+                      <CardDescription className="font-mono text-xs tabular-nums mt-1">{dict.cattle.tagNumber}: {animal.tagId}</CardDescription>
                     </div>
                     <div className="flex gap-2">
-                      <Badge variant="outline">{getSpeciesLabel(animal.species)}</Badge>
-                      <Badge variant="outline">{getSexLabel(animal.sex)}</Badge>
+                      <Badge variant="outline" className="uppercase tracking-kicker text-[10px] font-medium">{getSpeciesLabel(animal.species)}</Badge>
+                      <Badge variant="outline" className="uppercase tracking-kicker text-[10px] font-medium">{getSexLabel(animal.sex)}</Badge>
                     </div>
                   </div>
                 </CardHeader>

@@ -15,7 +15,10 @@
 
   /* Warm Bone/Off-White Background */
   --background: #fbfbfa;
-  --foreground: #111111;
+  --foreground: #000000;
+  
+  --text-primary: rgba(0, 0, 0, 0.87);
+  --text-secondary: rgba(0, 0, 0, 0.54);
 
   --card: #ffffff;
   --card-foreground: #111111;
@@ -23,8 +26,8 @@
   --popover: #ffffff;
   --popover-foreground: #111111;
 
-  /* Primary: Earthy Green */
-  --primary: #16a34a; 
+  /* Primary: Emerald (Logo matched) */
+  --primary: #059669; 
   --primary-foreground: #ffffff;
 
   /* Secondary: Desaturated Pale Green Accent */
@@ -33,7 +36,7 @@
 
   /* Muted: Minimal structural colors */
   --muted: #eaeaea;
-  --muted-foreground: #787774;
+  --muted-foreground: var(--text-secondary);
 
   --accent: #f7f6f3;
   --accent-foreground: #111111;
@@ -46,7 +49,7 @@
   --border: #eaeaea;
   --input: #eaeaea;
   
-  --ring: #16a34a;
+  --ring: #059669;
   
   /* Crisp borders */
   --radius: 0.375rem; 
@@ -72,19 +75,21 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
 
-  /* Primary Scale restored for shadcn primitives */
-  --color-primary-50: #f0fdf4;
-  --color-primary-100: #dcfce7;
-  --color-primary-200: #bbf7d0;
-  --color-primary-300: #86efac;
-  --color-primary-400: #4ade80;
-  --color-primary-500: #22c55e;
-  --color-primary-600: #16a34a;
-  --color-primary-700: #15803d;
-  --color-primary-800: #166534;
-  --color-primary-900: #14532d;
-  --color-primary-950: #052e16;
+  /* Primary Scale restored for shadcn primitives (Emerald) */
+  --color-primary-50: #ecfdf5;
+  --color-primary-100: #d1fae5;
+  --color-primary-200: #a7f3d0;
+  --color-primary-300: #6ee7b7;
+  --color-primary-400: #34d399;
+  --color-primary-500: #10b981;
+  --color-primary-600: #059669;
+  --color-primary-700: #047857;
+  --color-primary-800: #065f46;
+  --color-primary-900: #064e3b;
+  --color-primary-950: #022c22;
 
   /* Redefine hardcoded grays to align with Semantic Minimalist UI rules */
   --color-gray-50: var(--accent);
@@ -106,17 +111,37 @@
   --radius-xl: calc(var(--radius) + 4px);
 
   /* SYSTEM FONT STACK ONLY */
-  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Nirmala UI", Roboto, "Noto Sans Devanagari", "Helvetica Neue", Arial, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+
+  /* Typography Ledger Tokens */
+  --tracking-hero: -0.04em;
+  --tracking-display: -0.025em;
+  --tracking-heading: -0.01em;
+  --tracking-kicker: 0.16em;
+  --line-height-display: 1.1;
+  --line-height-heading: 1.25;
 }
+
+@utility text-kicker {
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-kicker);
+  font-weight: 500;
+  color: var(--color-primary-800);
+}
+
+@utility text-gray-400 { color: var(--text-secondary); }
+@utility text-gray-500 { color: var(--text-secondary); }
+@utility text-gray-600 { color: var(--text-secondary); }
+@utility text-gray-700 { color: var(--text-secondary); }
 
 /* Light mode lock: prevent dark mode classes from working entirely */
 @custom-variant dark (&:is(.never-applies-dark-mode *));
 
 body {
   background: var(--background);
-  color: var(--foreground);
+  color: var(--text-primary);
   font-family: var(--font-sans);
   line-height: 1.6;
 }

@@ -162,6 +162,20 @@ export default function RequestTrackingClient({ requestId }: RequestTrackingClie
 
   const isTerminal = request.status === "COMPLETED" || request.status === "CANCELLED" || request.status === "EXPIRED";
 
+  const getStatusText = (status: string) => {
+    switch (status) {
+      case "OPEN": return `⏳ ${status}`;
+      case "ACCEPTED": return `✅ ${status}`;
+      case "IN_PROGRESS": return `✅ ${status}`;
+      case "AWAITING_CONFIRMATION": return `⏳ ${status}`;
+      case "DISPUTED": return `🚨 ${status}`;
+      case "COMPLETED": return `✅ ${status}`;
+      case "CANCELLED":
+      case "EXPIRED": return `❌ ${status}`;
+      default: return status;
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-4 mb-2">
@@ -174,8 +188,8 @@ export default function RequestTrackingClient({ requestId }: RequestTrackingClie
         <CardHeader>
           <div className="flex justify-between items-start">
             <div>
-              <CardTitle className="flex items-center gap-2">
-                {request.kind === "SOS" && <AlertTriangle className="h-5 w-5 text-destructive" />}
+              <CardTitle className="text-3xl font-black tracking-hero text-gray-900 flex items-center gap-2">
+                {request.kind === "SOS" && <AlertTriangle className="h-6 w-6 text-destructive" />}
                 {request.kind === "SOS" ? "Emergency Request" : "Routine Request"}
               </CardTitle>
               <CardDescription className="mt-1">
@@ -183,17 +197,17 @@ export default function RequestTrackingClient({ requestId }: RequestTrackingClie
               </CardDescription>
             </div>
             <Badge
-              className={
+              className={(
                 request.status === "OPEN" ? "bg-yellow-100 text-yellow-800" :
                   request.status === "ACCEPTED" ? "bg-blue-100 text-blue-800" :
                     request.status === "IN_PROGRESS" ? "bg-purple-100 text-purple-800" :
                       request.status === "AWAITING_CONFIRMATION" ? "bg-orange-100 text-orange-800" :
                         request.status === "DISPUTED" ? "bg-red-100 text-red-800" :
-                          request.status === "COMPLETED" ? "bg-green-100 text-green-800" :
+                          request.status === "COMPLETED" ? "bg-primary-100 text-primary-800" :
                             "bg-gray-100 text-gray-800"
-              }
+              ) + " uppercase tracking-kicker text-xs font-medium"}
             >
-              {request.status}
+              {getStatusText(request.status)}
             </Badge>
           </div>
         </CardHeader>
@@ -222,7 +236,7 @@ export default function RequestTrackingClient({ requestId }: RequestTrackingClie
               <p className="text-yellow-800 font-medium text-center">
                 Broadcasting to nearby providers...
               </p>
-              <p className="text-yellow-700 text-sm text-center">
+              <p className="text-yellow-700 text-base text-center">
                 Please wait. A provider will accept your request shortly.
               </p>
             </div>
@@ -230,7 +244,7 @@ export default function RequestTrackingClient({ requestId }: RequestTrackingClie
 
           {request.providerName && (
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 space-y-4">
-              <h3 className="font-semibold text-blue-900 flex items-center gap-2">
+              <h3 className="font-medium text-blue-900 flex items-center gap-2">
                 <CheckCircle className="h-5 w-5" />
                 Provider Assigned
               </h3>
@@ -243,7 +257,7 @@ export default function RequestTrackingClient({ requestId }: RequestTrackingClie
                 {request.estimatedTotalPaise && (
                   <div>
                     <p className="text-sm text-blue-700">Estimated Fee</p>
-                    <p className="font-medium text-blue-900">₹{(request.estimatedTotalPaise / 100).toFixed(0)}</p>
+                    <p className="font-semibold text-xl tracking-tight tabular-nums text-blue-900">₹{(request.estimatedTotalPaise / 100).toFixed(0)}</p>
                   </div>
                 )}
               </div>
@@ -272,16 +286,16 @@ export default function RequestTrackingClient({ requestId }: RequestTrackingClie
 
           {request.status === "AWAITING_CONFIRMATION" && (
             <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 space-y-4">
-              <h3 className="font-semibold text-orange-900 flex items-center gap-2">
+              <h3 className="font-medium text-orange-900 flex items-center gap-2">
                 <CheckCircle className="h-5 w-5" />
                 Did your visit happen?
               </h3>
-              <p className="text-sm text-orange-800">
+              <p className="text-base text-orange-800">
                 The provider has marked this visit as done. Please confirm or dispute.
               </p>
               <div className="flex gap-3 pt-2">
                 <Button 
-                  className="flex-1 bg-green-600 hover:bg-green-700 text-white" 
+                  className="flex-1 bg-primary-600 hover:bg-primary-700 text-white" 
                   onClick={handleConfirm}
                   disabled={isConfirmPending || isDisputePending}
                 >
@@ -307,7 +321,7 @@ export default function RequestTrackingClient({ requestId }: RequestTrackingClie
               <p className="text-red-800 font-medium text-center">
                 Visit Disputed
               </p>
-              <p className="text-red-700 text-sm text-center">
+              <p className="text-red-700 text-base text-center">
                 An administrator will review your dispute shortly.
               </p>
             </div>

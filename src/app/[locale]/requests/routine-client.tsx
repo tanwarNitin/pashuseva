@@ -39,12 +39,12 @@ export default function RoutineClient({ bookings, locale }: { bookings: RoutineB
 
   function getStatusBadge(status: string) {
     switch (status) {
-      case "REQUESTED": return <Badge variant="outline">{dict.requests.status.pending}</Badge>;
-      case "CONFIRMED": return <Badge variant="default">{dict.requests.status.accepted}</Badge>;
-      case "COMPLETED": return <Badge variant="secondary">{dict.requests.status.completed}</Badge>;
-      case "CANCELLED": return <Badge variant="destructive">{dict.requests.status.cancelled}</Badge>;
-      case "DECLINED": return <Badge variant="destructive">{dict.requests.status.declined}</Badge>;
-      default: return <Badge variant="outline">{status}</Badge>;
+      case "REQUESTED": return <Badge variant="outline" className="uppercase tracking-kicker text-xs font-medium">⏳ {dict.requests.status.pending}</Badge>;
+      case "CONFIRMED": return <Badge variant="default" className="uppercase tracking-kicker text-xs font-medium">✅ {dict.requests.status.accepted}</Badge>;
+      case "COMPLETED": return <Badge variant="secondary" className="uppercase tracking-kicker text-xs font-medium">✅ {dict.requests.status.completed}</Badge>;
+      case "CANCELLED": return <Badge variant="destructive" className="uppercase tracking-kicker text-xs font-medium">❌ {dict.requests.status.cancelled}</Badge>;
+      case "DECLINED": return <Badge variant="destructive" className="uppercase tracking-kicker text-xs font-medium">❌ {dict.requests.status.declined}</Badge>;
+      default: return <Badge variant="outline" className="uppercase tracking-kicker text-xs font-medium">{status}</Badge>;
     }
   }
 
@@ -71,8 +71,8 @@ export default function RoutineClient({ bookings, locale }: { bookings: RoutineB
           <CardHeader>
             <div className="flex justify-between items-start">
               <div>
-                <CardTitle className="text-lg">{booking.animalName || dict.requests.animalUnknown}</CardTitle>
-                <CardDescription>{dict.requests.requestId}: {booking.id.slice(0, 8)}...</CardDescription>
+                <CardTitle className="text-2xl font-black tracking-hero text-gray-900">{booking.animalName || dict.requests.animalUnknown}</CardTitle>
+                <CardDescription className="font-mono text-xs mt-1 tabular-nums">{dict.requests.requestId}: {booking.id.slice(0, 8)}...</CardDescription>
               </div>
               {getStatusBadge(booking.status)}
             </div>
@@ -81,18 +81,18 @@ export default function RoutineClient({ bookings, locale }: { bookings: RoutineB
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="flex items-center gap-2 text-sm text-gray-600">
                 <Clock className="w-4 h-4" />
-                <span className="font-medium text-gray-900">{dict.routine?.scheduledFor || "Scheduled For"}:</span>
+                <span className="font-normal text-gray-700">{dict.routine?.scheduledFor || "Scheduled For"}:</span>
                 <span>{new Date(booking.scheduledFor).toLocaleString(locale)}</span>
               </div>
               <div className="flex items-center gap-2 text-sm text-gray-600">
                 <User className="w-4 h-4" />
-                <span className="font-medium text-gray-900">{dict.request.provider}:</span>
+                <span className="font-normal text-gray-700">{dict.request.provider}:</span>
                 <span>{booking.providerName}</span>
               </div>
               <div className="flex items-start gap-2 text-sm text-gray-600 md:col-span-2">
                 <Stethoscope className="w-4 h-4 mt-0.5" />
                 <div>
-                  <span className="font-medium text-gray-900">{dict.routine?.reason || "Reason"}:</span>
+                  <span className="font-normal text-gray-700">{dict.routine?.reason || "Reason"}:</span>
                   <p className="mt-1">{booking.reason}</p>
                 </div>
               </div>

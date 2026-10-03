@@ -95,7 +95,7 @@ export default function DiscoveryMap({
   const getProviderTypeColor = (type: string) => {
     return type === "VET_DOCTOR"
       ? "bg-blue-100 text-blue-800 border-blue-300"
-      : "bg-green-100 text-green-800 border-green-300";
+      : "bg-primary-100 text-primary-800 border-primary-300";
   };
 
   const getDistanceText = (meters: number | null) => {
@@ -242,7 +242,7 @@ export default function DiscoveryMap({
                 <div className="flex items-center gap-2">
                   <Clock className="h-4 w-4 text-muted-foreground" />
                   <span className="flex items-center gap-1">
-                    <span className="h-2 w-2 rounded-full bg-green-500"></span>
+                    <span className="h-2 w-2 rounded-full bg-primary-500"></span>
                     Available
                   </span>
                 </div>
@@ -329,15 +329,15 @@ export default function DiscoveryMap({
                 onClick={() => handleProviderClick(provider)}
               >
                 <div className="flex justify-between items-start mb-1">
-                  <h4 className="font-bold text-sm line-clamp-1">{provider.name}</h4>
-                  <Badge className={`text-[10px] h-5 px-1.5 ${getProviderTypeColor(provider.providerType)}`} variant="secondary">
+                  <h4 className="font-medium text-base text-gray-900 line-clamp-1">{provider.name}</h4>
+                  <Badge className={`text-[10px] h-5 px-1.5 uppercase tracking-kicker ${getProviderTypeColor(provider.providerType)}`} variant="secondary">
                     {provider.providerType === "VET_DOCTOR" ? "VET" : "PARA"}
                   </Badge>
                 </div>
                 <p className="text-xs text-muted-foreground mb-3 line-clamp-1">{provider.qualification}</p>
                 <div className="flex items-end justify-between mt-auto">
                   <div>
-                    <span className="text-2xl font-bold tracking-tight">
+                    <span className="text-4xl font-black tracking-hero text-gray-900 tabular-nums leading-none">
                       {provider.distanceMeters !== null ? (
                         provider.distanceMeters < 1000 
                           ? provider.distanceMeters 
@@ -346,13 +346,13 @@ export default function DiscoveryMap({
                         "--"
                       )}
                     </span>
-                    <span className="text-xs text-muted-foreground ml-1">
+                    <span className="text-sm font-semibold text-gray-600 ml-1">
                       {provider.distanceMeters !== null ? (provider.distanceMeters < 1000 ? "m" : "km") : ""}
                     </span>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <span className="h-2 w-2 rounded-full bg-green-500 animate-pulse"></span>
-                    <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">Available</span>
+                    <span className="h-2 w-2 rounded-full bg-primary-500 animate-pulse"></span>
+                    <span className="text-[10px] text-kicker">Available</span>
                   </div>
                 </div>
               </div>

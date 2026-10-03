@@ -88,8 +88,8 @@ export function OnboardingForm({ locale, dict }: OnboardingFormProps) {
 
   if (formState.success) {
     return (
-      <div className="text-center p-6 bg-green-50 rounded-lg border border-green-200">
-        <h3 className="text-lg font-medium text-green-900 mb-2">{dict.success}</h3>
+      <div className="text-center p-6 bg-primary-50 rounded-lg border border-primary-200">
+        <h3 className="text-lg font-medium text-primary-900 mb-2">{dict.success}</h3>
       </div>
     );
   }

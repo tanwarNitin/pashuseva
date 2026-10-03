@@ -92,9 +92,9 @@ export default function BookRoutineClient({ provider, animals, locale }: BookRou
 
       <Card>
         <CardHeader>
-          <CardTitle>{dict.routine?.bookTitle || "Book Routine Visit"}</CardTitle>
+          <CardTitle className="text-3xl font-black tracking-hero text-gray-900">{dict.routine?.bookTitle || "Book Routine Visit"}</CardTitle>
           <CardDescription>
-            {dict.routine?.bookSubtitle || "Schedule a non-emergency visit with"} <span className="font-semibold text-primary">{provider.name}</span>
+            {dict.routine?.bookSubtitle || "Schedule a non-emergency visit with"} <span className="font-medium text-primary">{provider.name}</span>
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -181,7 +181,7 @@ export default function BookRoutineClient({ provider, animals, locale }: BookRou
             <div className="pt-4 border-t">
               <div className="flex justify-between items-center mb-6 text-sm">
                 <span className="text-muted-foreground">{dict.discovery.baseVisitFee || "Base Visit Fee"}</span>
-                <span className="font-semibold text-lg">₹{provider.baseVisitFeePaise / 100}</span>
+                <span className="font-semibold text-2xl tracking-tight tabular-nums text-gray-900">₹{provider.baseVisitFeePaise / 100}</span>
               </div>
 
               <Button 

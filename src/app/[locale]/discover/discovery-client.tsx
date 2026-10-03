@@ -313,11 +313,11 @@ export default function DiscoveryClient({
               <CardContent className="p-4 space-y-4">
                 {!query && (
                   <div className="flex items-center justify-between gap-2">
-                    <span className="text-sm font-medium">{dict.discovery.radius}:</span>
+                    <span className="text-sm font-semibold">{dict.discovery.radius}:</span>
                     <select
                       value={state.searchParams.maxDistanceMeters || 50000}
                       onChange={(e) => handleDistanceChange(parseInt(e.target.value))}
-                      className="border border-border rounded-lg h-9 px-3 text-sm bg-background focus:outline-none focus:ring-2 focus:ring-primary"
+                      className="border border-border rounded-lg h-9 px-3 text-sm bg-background focus:outline-none focus:ring-2 focus:ring-primary tabular-nums font-semibold"
                     >
                       <option value={5000}>{dict.discovery.distance5km}</option>
                       <option value={10000}>{dict.discovery.distance10km}</option>
@@ -329,7 +329,7 @@ export default function DiscoveryClient({
                 )}
                 
                 <div className="flex items-center justify-between gap-2">
-                  <span className="text-sm font-medium">{dict.discovery.providerType}:</span>
+                  <span className="text-sm font-semibold">{dict.discovery.providerType}:</span>
                   <select
                     value={state.searchParams.providerType || ""}
                     onChange={(e) =>
@@ -356,7 +356,7 @@ export default function DiscoveryClient({
             <Card className="bg-card/95 shadow-xl border-dashed pointer-events-auto">
               <CardContent className="flex flex-col items-center justify-center p-8">
                 <Loader2 className="h-8 w-8 text-primary animate-spin mb-3" />
-                <h3 className="font-semibold text-foreground">{dict.discovery.gettingLocation}</h3>
+                <h3 className="font-semibold text-foreground tracking-heading text-balance">{dict.discovery.gettingLocation}</h3>
               </CardContent>
             </Card>
           )}
@@ -365,8 +365,8 @@ export default function DiscoveryClient({
             <Card className="bg-card/95 shadow-xl border-dashed pointer-events-auto max-w-sm">
               <CardContent className="flex flex-col items-center justify-center p-8 text-center">
                 <MapPinOff className="h-10 w-10 text-muted-foreground mx-auto mb-4" />
-                <h2 className="font-semibold text-lg mb-2">{dict.discovery.locationAccessNeeded}</h2>
-                <p className="text-sm text-muted-foreground mb-6">
+                <h2 className="font-semibold text-lg mb-2 tracking-heading text-balance">{dict.discovery.locationAccessNeeded}</h2>
+                <p className="text-base text-foreground mb-6 text-pretty">
                   {dict.discovery.enableLocationDescText}
                 </p>
                 <Button 
@@ -386,7 +386,7 @@ export default function DiscoveryClient({
                 <div className="text-center">
                   <MapPin className="h-10 w-10 text-muted-foreground mx-auto mb-3" />
                   <h3 className="font-semibold mb-1">{dict.discovery.noProvidersFound}</h3>
-                  <p className="text-sm text-muted-foreground mb-4">
+                  <p className="text-base text-foreground mb-4">
                     {query
                       ? dict.discovery.noProvidersMatched
                       : dict.discovery.tryExpandingSearch}
